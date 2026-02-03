@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Contact | Dr. Richardson",
+    title: "Contact | Dr. Kotla",
     description: "Get in touch to schedule an appointment or ask questions.",
 };
 
@@ -15,7 +15,7 @@ export default function Contact() {
                     <div>
                         <h3>Office Information</h3>
                         <p><strong>Address:</strong><br />123 Healing Way, Suite 404<br />Wellness City, ST 12345</p>
-                        <p style={{ marginTop: '1rem' }}><strong>Email:</strong><br />contact@drrichardson.com</p>
+                        <p style={{ marginTop: '1rem' }}><strong>Email:</strong><br />contact@drKotla.com</p>
                         <p style={{ marginTop: '1rem' }}><strong>Phone:</strong><br />(555) 123-4567</p>
 
                         <div style={{ marginTop: '2rem', padding: '1rem', background: 'hsla(35, 30%, 96%, 0.5)', borderRadius: 'var(--radius-md)' }}>

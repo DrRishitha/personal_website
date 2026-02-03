@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "Services | Dr. Richardson",
+    title: "Services | Dr. Kotla",
     description: "Comprehensive psychiatric services including therapy, medication management, and consultations.",
 };
 

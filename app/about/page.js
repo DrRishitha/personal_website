@@ -1,5 +1,5 @@
 export const metadata = {
-    title: "About Dr. Richardson | Psychiatrist",
+    title: "About Dr. Kotla | Psychiatrist",
     description: "Learn about Dr. Rishitha Kotla's background, qualifications, and philosophy of care.",
 };
 
@@ -9,7 +9,7 @@ export default function About() {
     return (
         <div className="container mt-lg mb-lg">
             <div className={`glass-panel ${styles.panel}`}>
-                <h1 className="text-center" style={{ marginBottom: '2rem' }}>About Dr. Richardson</h1>
+                <h1 className="text-center" style={{ marginBottom: '2rem' }}>About Dr. Kotla</h1>
 
                 <div className={styles.contentWrapper}>
                     <div className={styles.imagePlaceholder}>
