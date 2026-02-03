@@ -27,12 +27,12 @@
   .panel {
     padding: 1.5rem;
   }
-  
+
   .imagePlaceholder {
     height: 250px;
     flex-basis: 100%;
   }
-  
+
   .textContent {
     flex-basis: 100%;
   }
