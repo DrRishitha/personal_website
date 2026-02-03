@@ -5,23 +5,21 @@ export const metadata = {
 
 import styles from './About.module.css';
 
-import styles from './About.module.css';
-
 export default function About() {
     return (
         <div className="container mt-lg mb-lg">
-            <div className="glass-panel" style={{ padding: '3rem', maxWidth: '900px', margin: '0 auto' }}>
+            <div className={`glass-panel ${styles.panel}`}>
                 <h1 className="text-center" style={{ marginBottom: '2rem' }}>About Dr. Richardson</h1>
 
-                <div style={{ display: 'flex', gap: '2rem', flexWrap: 'wrap', alignItems: 'flex-start' }}>
-                    <div style={{ flex: '1 1 300px', background: 'var(--color-primary-light)', height: '300px', borderRadius: 'var(--radius-md)' }}>
+                <div className={styles.contentWrapper}>
+                    <div className={styles.imagePlaceholder}>
                         {/* Placeholder for Doctor's Image */}
                         <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white' }}>
                             Photo Placeholder
                         </div>
                     </div>
 
-                    <div style={{ flex: '2 1 400px' }}>
+                    <div className={styles.textContent}>
                         <h2>Compassionate Care, Clinical Excellence</h2>
                         <p>
                             Dr. Rishitha Kotla is a board-certified psychiatrist with over 15 years of experience in treating complex mental health conditions.
