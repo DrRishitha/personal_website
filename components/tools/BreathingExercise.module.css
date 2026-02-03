@@ -1,0 +1,44 @@
+.container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    cursor: pointer;
+    background: hsla(205, 50%, 95%, 0.5);
+    border-radius: 50%;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    background: var(--color-accent);
+    border-radius: 50%;
+    opacity: 0.8;
+    transition: all 4s ease-in-out;
+    box-shadow: 0 0 20px var(--color-accent);
+}
+
+.inhale {
+    transform: scale(2.5);
+    background: var(--color-primary);
+    /* Darker blue on inhale? or keep accent */
+}
+
+.hold {
+    transform: scale(2.5);
+}
+
+.exhale {
+    transform: scale(1);
+}
+
+.label {
+    position: absolute;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    pointer-events: none;
+}

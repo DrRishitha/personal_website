@@ -1,0 +1,39 @@
+.panel {
+  padding: 3rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.contentWrapper {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.imagePlaceholder {
+  flex: 1 1 300px;
+  background: var(--color-primary-light);
+  height: 300px;
+  border-radius: var(--radius-md);
+  width: 100%;
+}
+
+.textContent {
+  flex: 2 1 400px;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    padding: 1.5rem;
+  }
+  
+  .imagePlaceholder {
+    height: 250px;
+    flex-basis: 100%;
+  }
+  
+  .textContent {
+    flex-basis: 100%;
+  }
+}
