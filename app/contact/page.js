@@ -14,9 +14,9 @@ export default function Contact() {
                 <div className={styles.grid}>
                     <div>
                         <h3>Office Information</h3>
-                        <p><strong>Address:</strong><br />123 Healing Way, Suite 404<br />Wellness City, ST 12345</p>
-                        <p style={{ marginTop: '1rem' }}><strong>Email:</strong><br />contact@drKotla.com</p>
-                        <p style={{ marginTop: '1rem' }}><strong>Phone:</strong><br />(555) 123-4567</p>
+                        <p><strong>Address:</strong><br />Himayathnagar<br />Hyderabad</p>
+                        <p style={{ marginTop: '1rem' }}><strong>Email:</strong><br />dr.rishithakotla@gmail.com</p>
+                        <p style={{ marginTop: '1rem' }}><strong>Phone:</strong><br />(+91) 7569200837</p>
 
                         <div style={{ marginTop: '2rem', padding: '1rem', background: 'hsla(35, 30%, 96%, 0.5)', borderRadius: 'var(--radius-md)' }}>
                             <h4>Hours</h4>
