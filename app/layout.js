@@ -20,14 +20,19 @@ export const metadata = {
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ChatProvider from "@/components/chat/ChatProvider";
+import ChatWidget from "@/components/chat/ChatWidget";
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body>
-        <Header />
-        <main style={{ minHeight: '80vh' }}>{children}</main>
-        <Footer />
+        <ChatProvider>
+          <Header />
+          <main style={{ minHeight: '80vh' }}>{children}</main>
+          <Footer />
+          <ChatWidget />
+        </ChatProvider>
       </body>
     </html>
   );

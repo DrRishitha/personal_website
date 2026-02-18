@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import HelplineNumber from '@/components/shared/HelplineNumber';
 import styles from './Hero.module.css';
 
 export default function Hero() {
@@ -17,9 +18,11 @@ export default function Hero() {
                         <Link href="/contact" className="btn btn-primary">Book Consultation</Link>
                         <Link href="/tools" className="btn btn-outline">Try Self-Help Tools</Link>
                     </div>
+                    <div className={styles.helplineBanner}>
+                        <HelplineNumber compact />
+                    </div>
                 </div>
                 <div className={styles.visual}>
-                    {/* Abstract calm shape using CSS gradients */}
                     <div className={styles.blob}></div>
                 </div>
             </div>

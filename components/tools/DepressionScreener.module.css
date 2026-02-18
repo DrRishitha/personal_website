@@ -1,6 +1,9 @@
 .container {
-    background: white;
-    padding: 2rem;
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid hsla(205, 50%, 25%, 0.08);
+    padding: 2.5rem 2rem;
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-card);
     max-width: 600px;
@@ -12,7 +15,7 @@
 
 .progress {
     height: 6px;
-    background: #eee;
+    background: hsla(205, 50%, 25%, 0.08);
     border-radius: 10px;
     margin-bottom: 2rem;
     overflow: hidden;
@@ -29,6 +32,7 @@
     margin-bottom: 2.5rem;
     font-size: 1.25rem;
     flex-grow: 1;
+    color: var(--color-text-main);
 }
 
 .number {
@@ -44,14 +48,15 @@
 }
 
 .optionBtn {
-    padding: 1rem;
-    border: 2px solid #eee;
+    padding: 1rem 1.25rem;
+    border: 2px solid hsla(205, 50%, 25%, 0.1);
     border-radius: var(--radius-md);
-    background: white;
+    background: hsla(0, 0%, 100%, 0.7);
     cursor: pointer;
     font-size: 1rem;
     transition: all 0.2s;
     text-align: left;
+    color: var(--color-text-main);
 }
 
 .optionBtn:hover {
@@ -100,10 +105,19 @@
     font-size: 3rem;
     font-weight: 700;
     line-height: 1;
+    color: var(--color-text-main);
 }
 
 .level {
     font-size: 0.9rem;
     font-weight: 500;
     margin-top: 0.5rem;
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 1.5rem;
+        min-height: auto;
+    }
 }

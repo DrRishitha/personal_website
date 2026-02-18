@@ -1,0 +1,151 @@
+.container {
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid hsla(205, 50%, 25%, 0.08);
+    padding: 2.5rem 2rem;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    max-width: 600px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.title {
+    margin-bottom: 1rem;
+}
+
+.intro {
+    color: var(--color-text-muted);
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+    max-width: none;
+}
+
+.instructionList {
+    text-align: left;
+    margin-bottom: 1.5rem;
+}
+
+.instruction {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    max-width: none;
+}
+
+.bullet {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    border-radius: 50%;
+    background: var(--color-primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.duration {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    opacity: 0.8;
+}
+
+.progressHeader {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+}
+
+.progressTrack {
+    height: 6px;
+    background: hsla(205, 50%, 25%, 0.08);
+    border-radius: 10px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+}
+
+.progressFill {
+    height: 100%;
+    background: var(--color-primary);
+    transition: width 0.5s ease;
+}
+
+.phaseIndicator {
+    padding: 0.75rem 2rem;
+    border-radius: 50px;
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    font-weight: 600;
+}
+
+.tensionPhase {
+    background: hsla(205, 50%, 25%, 0.1);
+    color: var(--color-primary);
+}
+
+.releasePhase {
+    background: hsla(160, 25%, 45%, 0.1);
+    color: var(--color-accent);
+}
+
+.phaseLabel {
+    font-size: 1.1rem;
+}
+
+.timerCircle {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    margin: 0 auto 1.5rem;
+}
+
+.timerSvg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+}
+
+.timerText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--color-primary);
+}
+
+.currentInstruction {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: var(--color-text-main);
+    max-width: none;
+}
+
+.controls {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.completeIcon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+}
+
+@media (max-width: 600px) {
+    .controls {
+        flex-direction: column;
+    }
+}

@@ -22,7 +22,8 @@ export default function Header() {
                     <Link href="/" className={styles.link}>Home</Link>
                     <Link href="/about" className={styles.link}>About</Link>
                     <Link href="/services" className={styles.link}>Services</Link>
-                    <Link href="/tools" className={styles.link}>Self-Help Tools</Link>
+                    <Link href="/tools" className={styles.link}>Tools</Link>
+                    <Link href="/disorders" className={styles.link}>Disorders</Link>
                     <Link href="/contact" className={`btn btn-primary ${styles.cta}`}>Contact</Link>
                 </nav>
 
@@ -45,6 +46,7 @@ export default function Header() {
                         <Link href="/about" className={styles.mobileLink} onClick={closeMenu}>About</Link>
                         <Link href="/services" className={styles.mobileLink} onClick={closeMenu}>Services</Link>
                         <Link href="/tools" className={styles.mobileLink} onClick={closeMenu}>Self-Help Tools</Link>
+                        <Link href="/disorders" className={styles.mobileLink} onClick={closeMenu}>Disorders</Link>
                         <Link href="/contact" className={`btn btn-primary ${styles.mobileCta}`} onClick={closeMenu}>Contact</Link>
                     </nav>
                 </div>

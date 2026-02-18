@@ -1,0 +1,183 @@
+.session {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.phaseProgress {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.phaseProgress::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: hsla(205, 50%, 25%, 0.1);
+}
+
+.phaseStep {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.stepDot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid hsla(205, 50%, 25%, 0.2);
+    transition: all 0.3s ease;
+}
+
+.currentStep .stepDot {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 10px hsla(205, 50%, 25%, 0.3);
+}
+
+.completedStep .stepDot {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.stepLabel {
+    font-size: 0.7rem;
+    color: var(--color-text-muted);
+    text-align: center;
+    max-width: 80px;
+}
+
+.currentStep .stepLabel {
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.content {
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid hsla(205, 50%, 25%, 0.08);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.phaseName {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.introContent {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.instruction {
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    margin-bottom: 0.75rem;
+    max-width: none;
+}
+
+.guidedContent {
+    text-align: center;
+}
+
+.guidedInstruction {
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.largeText {
+    font-size: 1.4rem;
+    font-family: var(--font-heading);
+    color: var(--color-primary);
+    line-height: 1.6;
+    max-width: 500px;
+    margin: 0 auto 1.5rem;
+    transition: all 0.5s ease;
+}
+
+.timer {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+    font-variant-numeric: tabular-nums;
+}
+
+.desensitizationContent {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.desensInstructions {
+    background: hsla(205, 50%, 25%, 0.03);
+    padding: 1rem 1.5rem;
+    border-radius: var(--radius-md);
+}
+
+.desensInstructions p {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    margin-bottom: 0.5rem;
+    max-width: none;
+}
+
+.desensInstructions p:last-child {
+    margin-bottom: 0;
+}
+
+.phaseCompleteMsg {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+.phaseCompleteMsg p {
+    font-size: 1.1rem;
+    color: var(--color-accent);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    max-width: none;
+}
+
+.resetBtn {
+    display: block;
+    margin: 0 auto;
+    background: none;
+    border: none;
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.resetBtn:hover {
+    color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+    .stepLabel {
+        font-size: 0.6rem;
+        max-width: 60px;
+    }
+
+    .content {
+        padding: 1.5rem;
+    }
+
+    .largeText {
+        font-size: 1.2rem;
+    }
+}

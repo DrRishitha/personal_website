@@ -29,7 +29,7 @@ export default function Features() {
             <h2 className="text-center" style={{ marginBottom: '3rem' }}>Comprehensive Care Approach</h2>
             <div className={styles.grid}>
                 {features.map((feature, index) => (
-                    <div key={index} className="glass-panel" style={{ padding: '2rem' }}>
+                    <div key={index} className={`glass-panel ${styles.card}`}>
                         <div className={styles.icon}>{feature.icon}</div>
                         <h3>{feature.title}</h3>
                         <p>{feature.description}</p>

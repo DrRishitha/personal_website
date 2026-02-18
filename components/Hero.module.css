@@ -32,6 +32,14 @@
     gap: 1rem;
 }
 
+.helplineBanner {
+    margin-top: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: hsla(205, 50%, 25%, 0.05);
+    border-radius: var(--radius-md);
+    border: 1px solid hsla(205, 50%, 25%, 0.08);
+}
+
 .visual {
     position: relative;
     display: flex;
