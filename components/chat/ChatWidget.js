@@ -50,14 +50,19 @@ export default function ChatWidget() {
             {/* Chat Window */}
             {isOpen && (
                 <div className={styles.chatWindow}>
-                    {/* Header */}
                     <div className={styles.chatHeader}>
-                        <div>
-                            <h4 className={styles.chatTitle}>Dr. Kotla&apos;s Assistant</h4>
-                            <span className={styles.chatStatus}>Online</span>
+                        <div className={styles.headerInfo}>
+                            <div className={styles.avatar}>👩‍⚕️</div>
+                            <div className={styles.headerText}>
+                                <h4 className={styles.chatTitle}>Dr. Kotla&apos;s Assistant</h4>
+                                <span className={styles.chatStatus}>
+                                    <span className={styles.statusDot} />
+                                    Online
+                                </span>
+                            </div>
                         </div>
                         <button onClick={clearChat} className={styles.clearBtn} title="Clear chat">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                                 <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>

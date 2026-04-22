@@ -1,10 +1,13 @@
 "use client";
 
 import { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { disorders } from '@/data/disorders';
 import DisorderCard from '@/components/disorders/DisorderCard';
+import styles from './Disorders.module.css';
 
 const UNLOCK_KEY = 'disorders_unlocked';
+const VALID_CODES = ['mindwell2024', 'drrishitha'];
 
 export default function DisordersPage() {
     const [isUnlocked, setIsUnlocked] = useState(false);
@@ -18,8 +21,7 @@ export default function DisordersPage() {
     }, []);
 
     const handleUnlock = () => {
-        // Simple code-based unlock - doctor provides this code during consultation
-        if (code.toLowerCase().trim() === 'mindwell2024' || code.toLowerCase().trim() === 'drrishitha') {
+        if (VALID_CODES.includes(code.toLowerCase().trim())) {
             localStorage.setItem(UNLOCK_KEY, 'true');
             setIsUnlocked(true);
             setShowCodeInput(false);
@@ -29,74 +31,74 @@ export default function DisordersPage() {
         }
     };
 
+    const relock = () => {
+        localStorage.removeItem(UNLOCK_KEY);
+        setIsUnlocked(false);
+    };
+
     return (
         <div className="container mt-lg mb-lg">
-            <header className="text-center mb-lg">
-                <h1>Common Mental Health Disorders</h1>
-                <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto' }}>
-                    Understanding mental health conditions is the first step toward healing.
-                </p>
+            <header className={styles.pageHeader}>
+                <span className="eyebrow">Educational resource</span>
+                <h1>Understanding <span className="gradient-text">mental health disorders</span></h1>
+                <p>Learning about a condition is often the first step toward healing. This library covers common disorders with symptoms, treatments, and guidance on when to seek help.</p>
 
-                {!isUnlocked && (
-                    <div style={{ marginTop: '1.5rem' }}>
-                        {!showCodeInput ? (
+                <div className={styles.statusRow}>
+                    {!isUnlocked ? (
+                        !showCodeInput ? (
                             <button
                                 onClick={() => setShowCodeInput(true)}
                                 className="btn btn-outline"
                             >
-                                🔓 Unlock Full Content
+                                🔓 Unlock full content
                             </button>
                         ) : (
-                            <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'center', alignItems: 'center', flexWrap: 'wrap' }}>
+                            <div className={styles.codeInputRow}>
                                 <input
                                     type="text"
                                     value={code}
                                     onChange={(e) => { setCode(e.target.value); setError(''); }}
                                     placeholder="Enter consultation code"
-                                    style={{
-                                        padding: '0.75rem 1rem', borderRadius: '50px', border: '2px solid var(--color-primary)',
-                                        fontSize: '1rem', outline: 'none', width: '250px', background: 'white', color: 'var(--color-text-main)'
-                                    }}
+                                    className="form-input"
+                                    style={{ width: '260px' }}
                                     onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
+                                    autoFocus
                                 />
                                 <button onClick={handleUnlock} className="btn btn-primary">Unlock</button>
                                 <button
-                                    onClick={() => { setShowCodeInput(false); setError(''); }}
-                                    style={{ background: 'none', border: 'none', color: 'var(--color-text-muted)', cursor: 'pointer' }}
+                                    onClick={() => { setShowCodeInput(false); setError(''); setCode(''); }}
+                                    className="btn btn-ghost"
                                 >
                                     Cancel
                                 </button>
                             </div>
-                        )}
-                        {error && <p style={{ color: '#ef4444', fontSize: '0.9rem', marginTop: '0.75rem' }}>{error}</p>}
-                        <p style={{ fontSize: '0.85rem', color: 'var(--color-text-muted)', marginTop: '0.75rem' }}>
+                        )
+                    ) : (
+                        <div className={styles.unlockedBadge}>
+                            <span>✅ Content unlocked</span>
+                            <button onClick={relock} className={styles.relockLink}>Re-lock</button>
+                        </div>
+                    )}
+                    {error && <p className={styles.error}>{error}</p>}
+                    {!isUnlocked && (
+                        <p className={styles.hint}>
                             Detailed information is blurred until after your consultation with Dr. Kotla.
                         </p>
-                    </div>
-                )}
-
-                {isUnlocked && (
-                    <p style={{ color: 'var(--color-accent)', fontWeight: 500, marginTop: '1rem' }}>
-                        ✅ Content unlocked
-                    </p>
-                )}
+                    )}
+                </div>
             </header>
 
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
-                {disorders.map(disorder => (
-                    <DisorderCard
-                        key={disorder.id}
-                        disorder={disorder}
-                        isUnlocked={isUnlocked}
-                    />
+            <div className={styles.grid}>
+                {disorders.map((disorder, i) => (
+                    <div key={disorder.id} style={{ animationDelay: `${i * 0.04}s` }}>
+                        <DisorderCard disorder={disorder} isUnlocked={isUnlocked} />
+                    </div>
                 ))}
             </div>
 
-            <div className="text-center mt-lg">
-                <p style={{ color: 'var(--color-text-muted)', marginBottom: '1rem', fontSize: '0.9rem' }}>
-                    This information is for educational purposes only and does not replace professional diagnosis.
-                </p>
-                <a href="/contact" className="btn btn-primary">Book a Consultation</a>
+            <div className={styles.footer}>
+                <p>This information is for educational purposes only and does not replace professional diagnosis.</p>
+                <Link href="/contact" className="btn btn-primary">Book a Consultation</Link>
             </div>
         </div>
     );

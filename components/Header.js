@@ -1,55 +1,107 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
+
+const NAV_LINKS = [
+    { href: '/', label: 'Home' },
+    { href: '/about', label: 'About' },
+    { href: '/services', label: 'Services' },
+    { href: '/tools', label: 'Tools' },
+    { href: '/disorders', label: 'Disorders' },
+];
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+    const pathname = usePathname();
 
-    const toggleMenu = () => setIsOpen(!isOpen);
+    useEffect(() => {
+        const onScroll = () => setScrolled(window.scrollY > 20);
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => window.removeEventListener('scroll', onScroll);
+    }, []);
+
+    useEffect(() => {
+        setIsOpen(false);
+    }, [pathname]);
+
+    useEffect(() => {
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+        return () => { document.body.style.overflow = ''; };
+    }, [isOpen]);
+
+    const toggleMenu = () => setIsOpen(v => !v);
     const closeMenu = () => setIsOpen(false);
 
     return (
-        <header className={styles.header}>
+        <header className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}>
             <div className={`container ${styles.container}`}>
                 <Link href="/" className={styles.logo} onClick={closeMenu}>
-                    Dr. Rishitha Kotla
+                    <span className={styles.logoMark} aria-hidden="true">✦</span>
+                    <span className={styles.logoText}>
+                        <span className={styles.logoTitle}>Dr. Rishitha Kotla</span>
+                        <span className={styles.logoSub}>Psychiatrist</span>
+                    </span>
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className={styles.navDesktop}>
-                    <Link href="/" className={styles.link}>Home</Link>
-                    <Link href="/about" className={styles.link}>About</Link>
-                    <Link href="/services" className={styles.link}>Services</Link>
-                    <Link href="/tools" className={styles.link}>Tools</Link>
-                    <Link href="/disorders" className={styles.link}>Disorders</Link>
-                    <Link href="/contact" className={`btn btn-primary ${styles.cta}`}>Contact</Link>
+                <nav className={styles.navDesktop} aria-label="Primary">
+                    {NAV_LINKS.map(link => {
+                        const active = pathname === link.href;
+                        return (
+                            <Link
+                                key={link.href}
+                                href={link.href}
+                                className={`${styles.link} ${active ? styles.linkActive : ''}`}
+                            >
+                                {link.label}
+                            </Link>
+                        );
+                    })}
+                    <Link href="/contact" className={`btn btn-primary ${styles.cta}`}>
+                        Book Consultation
+                    </Link>
                 </nav>
 
-                {/* Mobile Toggle */}
                 <button
-                    className={styles.hamburger}
+                    className={`${styles.hamburger} ${isOpen ? styles.hamburgerOpen : ''}`}
                     onClick={toggleMenu}
                     aria-label="Toggle navigation"
                     aria-expanded={isOpen}
                 >
-                    <span className={`${styles.bar} ${isOpen ? styles.open : ''}`}></span>
-                    <span className={`${styles.bar} ${isOpen ? styles.open : ''}`}></span>
-                    <span className={`${styles.bar} ${isOpen ? styles.open : ''}`}></span>
+                    <span className={styles.bar}></span>
+                    <span className={styles.bar}></span>
+                    <span className={styles.bar}></span>
                 </button>
+            </div>
 
-                {/* Mobile Nav Overlay */}
-                <div className={`${styles.mobileMenu} ${isOpen ? styles.menuOpen : ''}`}>
-                    <nav className={styles.navMobile}>
-                        <Link href="/" className={styles.mobileLink} onClick={closeMenu}>Home</Link>
-                        <Link href="/about" className={styles.mobileLink} onClick={closeMenu}>About</Link>
-                        <Link href="/services" className={styles.mobileLink} onClick={closeMenu}>Services</Link>
-                        <Link href="/tools" className={styles.mobileLink} onClick={closeMenu}>Self-Help Tools</Link>
-                        <Link href="/disorders" className={styles.mobileLink} onClick={closeMenu}>Disorders</Link>
-                        <Link href="/contact" className={`btn btn-primary ${styles.mobileCta}`} onClick={closeMenu}>Contact</Link>
-                    </nav>
-                </div>
+            <div
+                className={`${styles.mobileMenu} ${isOpen ? styles.menuOpen : ''}`}
+                aria-hidden={!isOpen}
+            >
+                <nav className={styles.navMobile} aria-label="Mobile">
+                    {NAV_LINKS.map((link, i) => (
+                        <Link
+                            key={link.href}
+                            href={link.href}
+                            className={styles.mobileLink}
+                            onClick={closeMenu}
+                            style={{ animationDelay: `${0.05 * i + 0.1}s` }}
+                        >
+                            {link.label}
+                        </Link>
+                    ))}
+                    <Link
+                        href="/contact"
+                        className={`btn btn-primary btn-lg ${styles.mobileCta}`}
+                        onClick={closeMenu}
+                    >
+                        Book Consultation
+                    </Link>
+                </nav>
             </div>
         </header>
     );

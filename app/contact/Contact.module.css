@@ -1,24 +1,115 @@
-.grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
+.header {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
 }
 
-@media (max-width: 768px) {
-    .grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
+.header p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin-top: 1rem;
 }
 
 .section {
-    padding: 3rem;
-    max-width: 800px;
-    margin: 0 auto;
+    padding: 2.5rem;
+    max-width: 960px;
+    margin: 0 auto 2rem;
 }
 
-@media (max-width: 600px) {
-    .section {
-        padding: 1.5rem;
+.messageSection {
+    padding: 2.5rem;
+}
+
+.messageHeader {
+    text-align: center;
+    margin-bottom: 2.25rem;
+}
+
+.messageHeader h2 {
+    margin-bottom: 0.4rem;
+}
+
+.messageHeader p {
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 2.5rem;
+    align-items: start;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.infoBlock {
+    padding: 1rem 1.1rem;
+    background: hsla(210, 30%, 50%, 0.05);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border);
+}
+
+.infoBlock h4 {
+    font-size: 0.85rem;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+}
+
+.infoBlock p {
+    margin: 0;
+    color: var(--color-text-main);
+    font-size: 0.93rem;
+    line-height: 1.5;
+}
+
+.infoBlock a {
+    color: var(--color-text-main);
+    transition: color var(--transition-fast);
+}
+
+.infoBlock a:hover { color: var(--color-primary); }
+
+.crisisBlock {
+    padding: 1rem 1.1rem;
+    background: hsla(0, 72%, 55%, 0.08);
+    border: 1px solid hsla(0, 72%, 55%, 0.2);
+    border-left: 3px solid var(--color-danger);
+    border-radius: var(--radius-md);
+}
+
+.crisisBlock strong {
+    color: var(--color-danger);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+
+.crisisBlock p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+}
+
+.crisisBlock a {
+    color: var(--color-danger);
+    font-weight: 700;
+}
+
+@media (max-width: 768px) {
+    .section { padding: 1.75rem 1.25rem; }
+    .grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
 }

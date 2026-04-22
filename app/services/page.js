@@ -3,6 +3,7 @@ import { therapyModalities } from '@/data/therapyModalities';
 import { medicationCategories, medicationDisclaimer } from '@/data/medications';
 import MedicationAccordion from '@/components/MedicationAccordion';
 import DeaddictionCarousel from '@/components/deaddiction/DeaddictionCarousel';
+import styles from './Services.module.css';
 
 export const metadata = {
     title: "Services | Dr. Kotla",
@@ -12,113 +13,129 @@ export const metadata = {
 const services = [
     {
         title: "Psychiatric Evaluation",
-        description: "A comprehensive 60-90 minute initial assessment to understand your history, symptoms, and goals. We will work together to form a diagnosis and treatment plan.",
-        price: "Inquire for rates"
+        description: "A comprehensive 60–90 minute initial assessment to understand your history, symptoms, and goals. We work together to form a diagnosis and treatment plan.",
+        price: "Inquire for rates",
+        duration: "60–90 min",
+        icon: "🩺",
     },
     {
         title: "Medication Management",
-        description: "Ongoing 30-minute follow-ups to monitor your progress, adjust medications if necessary, and ensure you are feeling your best.",
-        price: "Inquire for rates"
+        description: "Ongoing 30-minute follow-ups to monitor progress, adjust medications if needed, and ensure you are feeling your best.",
+        price: "Inquire for rates",
+        duration: "30 min",
+        icon: "💊",
     },
     {
         title: "Psychotherapy",
-        description: "Individual therapy sessions incorporating CBT, ACT, and psychodynamic approaches to address anxiety, depression, and trauma.",
-        price: "Inquire for rates"
+        description: "Individual therapy incorporating CBT, ACT, and psychodynamic approaches to address anxiety, depression, and trauma.",
+        price: "Inquire for rates",
+        duration: "50 min",
+        icon: "🗣️",
     },
     {
         title: "Second Opinion Consultations",
         description: "Expert review of your current diagnosis and treatment plan to provide clarity and new perspectives.",
-        price: "Inquire for rates"
-    }
+        price: "Inquire for rates",
+        duration: "45 min",
+        icon: "🔍",
+    },
 ];
 
 export default function Services() {
     return (
         <div className="container mt-lg mb-lg">
-            <header className="text-center mb-lg">
-                <h1>Our Services</h1>
-                <p style={{ color: 'var(--color-text-muted)', maxWidth: '600px', margin: '0 auto' }}>
-                    Personalized treatment plans tailored to your needs.
-                </p>
+            <header className={styles.pageHeader}>
+                <span className="eyebrow">Services</span>
+                <h1>Personalized psychiatric care</h1>
+                <p>Comprehensive treatment plans tailored to what you need — evidence-based, collaborative, and judgment-free.</p>
             </header>
 
-            {/* Core Services */}
-            <div style={{ display: 'grid', gap: '2rem', marginBottom: '4rem', maxWidth: '900px', margin: '0 auto 4rem' }}>
+            {/* Core services */}
+            <section className={styles.servicesGrid}>
                 {services.map((service, idx) => (
-                    <div key={idx} className="glass-panel" style={{ padding: '2rem 2.5rem' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', flexWrap: 'wrap', gap: '0.5rem', marginBottom: '0.75rem' }}>
-                            <h2 style={{ fontSize: '1.5rem', marginBottom: '0' }}>{service.title}</h2>
-                            <span style={{ color: 'var(--color-accent)', fontWeight: '600', fontSize: '0.9rem' }}>{service.price}</span>
+                    <article key={idx} className={`glass-panel ${styles.serviceCard}`}>
+                        <div className={styles.serviceTop}>
+                            <div className={styles.serviceIcon}>{service.icon}</div>
+                            <span className={styles.serviceDuration}>{service.duration}</span>
                         </div>
-                        <p style={{ color: 'var(--color-text-muted)', lineHeight: 1.7 }}>{service.description}</p>
-                    </div>
+                        <h3>{service.title}</h3>
+                        <p>{service.description}</p>
+                        <div className={styles.serviceFooter}>
+                            <span className={styles.servicePrice}>{service.price}</span>
+                            <Link href="/contact" className={styles.serviceLink}>
+                                Book
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                </svg>
+                            </Link>
+                        </div>
+                    </article>
                 ))}
-            </div>
+            </section>
 
             {/* Therapy Modalities */}
-            <section style={{ marginBottom: '4rem' }}>
-                <h2 className="text-center" style={{ marginBottom: '0.5rem' }}>Therapy Modalities We Offer</h2>
-                <p className="text-center" style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
-                    Evidence-based approaches for a range of conditions
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+            <section className={styles.subSection}>
+                <div className={styles.subHeader}>
+                    <span className="eyebrow">Modalities</span>
+                    <h2>Therapy approaches we offer</h2>
+                    <p>Evidence-based approaches matched to your goals and comfort.</p>
+                </div>
+                <div className={styles.modalityGrid}>
                     {therapyModalities.map(modality => (
-                        <div key={modality.id} className="glass-panel" style={{ padding: '2rem', textAlign: 'center' }}>
-                            <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>{modality.icon}</div>
-                            <h3 style={{ fontSize: '1.15rem', marginBottom: '0.5rem' }}>{modality.name}</h3>
-                            <p style={{ fontSize: '0.9rem', color: 'var(--color-text-muted)', lineHeight: 1.6, marginBottom: '1rem' }}>{modality.description}</p>
-                            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', justifyContent: 'center' }}>
+                        <article key={modality.id} className={`glass-panel ${styles.modalityCard}`}>
+                            <div className={styles.modalityIcon}>{modality.icon}</div>
+                            <h3>{modality.name}</h3>
+                            <p>{modality.description}</p>
+                            <div className={styles.modalityChips}>
                                 {modality.bestFor.map((condition, i) => (
-                                    <span key={i} style={{
-                                        padding: '0.25rem 0.75rem', background: 'hsla(160, 25%, 45%, 0.1)',
-                                        borderRadius: '50px', fontSize: '0.75rem', color: 'var(--color-accent)', fontWeight: 500
-                                    }}>
-                                        {condition}
-                                    </span>
+                                    <span key={i} className={styles.modalityChip}>{condition}</span>
                                 ))}
                             </div>
                             {modality.id === 'emdr' && (
-                                <Link href="/emdr" style={{ display: 'inline-block', marginTop: '1rem', color: 'var(--color-accent)', fontWeight: 600, fontSize: '0.9rem' }}>
-                                    Try Virtual EMDR →
+                                <Link href="/emdr" className={styles.modalityLink}>
+                                    Try Virtual EMDR
+                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+                                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    </svg>
                                 </Link>
                             )}
-                        </div>
+                        </article>
                     ))}
                 </div>
             </section>
 
-            {/* Medication Guide */}
-            <section style={{ marginBottom: '4rem', maxWidth: '900px', margin: '0 auto 4rem' }}>
-                <h2 className="text-center" style={{ marginBottom: '0.5rem' }}>Medication Guide</h2>
-                <p className="text-center" style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
-                    Common medications used in psychiatric treatment
-                </p>
+            {/* Medication guide */}
+            <section className={styles.subSection} style={{ maxWidth: '940px', margin: '0 auto 4rem' }}>
+                <div className={styles.subHeader}>
+                    <span className="eyebrow">Medication guide</span>
+                    <h2>Understanding common psychiatric medications</h2>
+                    <p>An educational reference — always speak with a psychiatrist before starting or changing medication.</p>
+                </div>
 
-                <div style={{
-                    padding: '1rem 1.5rem', background: 'hsla(45, 100%, 50%, 0.08)', border: '1px solid hsla(45, 100%, 50%, 0.2)',
-                    borderRadius: 'var(--radius-md)', marginBottom: '1.5rem', borderLeft: '4px solid #eab308'
-                }}>
-                    <p style={{ fontSize: '0.9rem', color: 'var(--color-text-main)', fontWeight: 500, margin: 0 }}>
-                        ⚠️ {medicationDisclaimer}
-                    </p>
+                <div className={styles.disclaimerBox}>
+                    <span>⚠️</span>
+                    <p>{medicationDisclaimer}</p>
                 </div>
 
                 <MedicationAccordion categories={medicationCategories} />
             </section>
 
-            {/* Deaddiction Methods */}
-            <section style={{ marginBottom: '4rem' }}>
-                <h2 className="text-center" style={{ marginBottom: '0.5rem' }}>Deaddiction Approaches</h2>
-                <p className="text-center" style={{ color: 'var(--color-text-muted)', marginBottom: '2rem', maxWidth: '500px', margin: '0 auto 2rem' }}>
-                    Evidence-based methods for recovery from substance dependence
-                </p>
+            {/* Deaddiction */}
+            <section className={styles.subSection}>
+                <div className={styles.subHeader}>
+                    <span className="eyebrow">Recovery</span>
+                    <h2>Deaddiction approaches</h2>
+                    <p>Evidence-based methods for recovery from substance dependence.</p>
+                </div>
                 <DeaddictionCarousel />
             </section>
 
-            <div className="text-center mt-lg">
-                <p style={{ marginBottom: '1rem', color: 'var(--color-text-muted)' }}>Not sure what you need?</p>
-                <a href="/contact" className="btn btn-primary">Get in Touch</a>
-            </div>
+            {/* CTA */}
+            <section className={`glass-panel ${styles.ctaPanel}`}>
+                <h3>Not sure what you need?</h3>
+                <p>A short conversation can help you figure out the right next step — no commitment required.</p>
+                <Link href="/contact" className="btn btn-primary btn-lg">Get in touch</Link>
+            </section>
         </div>
     );
 }

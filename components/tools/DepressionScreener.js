@@ -1,7 +1,6 @@
 "use client";
 
-import { useState } from 'react';
-import styles from './DepressionScreener.module.css';
+import Screener from './Screener';
 
 const questions = [
     "Little interest or pleasure in doing things",
@@ -22,99 +21,42 @@ const options = [
     { label: "Nearly every day", value: 3 }
 ];
 
+const getResult = (score) => {
+    if (score <= 4) return {
+        level: "Minimal Depression",
+        color: "hsl(150, 55%, 45%)",
+        description: "Your score suggests minimal or no depression. Keep taking care of yourself and maintaining healthy routines."
+    };
+    if (score <= 9) return {
+        level: "Mild Depression",
+        color: "hsl(50, 85%, 50%)",
+        description: "Your responses suggest mild depression. Self-care, journaling, and connecting with others may help — consider a consultation if symptoms persist."
+    };
+    if (score <= 14) return {
+        level: "Moderate Depression",
+        color: "hsl(25, 90%, 55%)",
+        description: "Your score indicates moderate depression. Professional support can help you feel better and learn effective coping strategies."
+    };
+    if (score <= 19) return {
+        level: "Moderately Severe Depression",
+        color: "hsl(5, 75%, 55%)",
+        description: "Your score suggests moderately severe depression. We strongly encourage you to reach out to a mental health professional soon."
+    };
+    return {
+        level: "Severe Depression",
+        color: "hsl(0, 72%, 50%)",
+        description: "Your score indicates severe depression. Please consider seeking professional help promptly. If you have thoughts of self-harm, call 1800-599-0019 (KIRAN) or 112."
+    };
+};
+
 export default function DepressionScreener() {
-    const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [scores, setScores] = useState(Array(questions.length).fill(null));
-    const [showResult, setShowResult] = useState(false);
-
-    const handleOptionSelect = (value) => {
-        const newScores = [...scores];
-        newScores[currentQuestion] = value;
-        setScores(newScores);
-
-        if (currentQuestion < questions.length - 1) {
-            setTimeout(() => setCurrentQuestion(currentQuestion + 1), 250);
-        } else {
-            setShowResult(true);
-        }
-    };
-
-    const reset = () => {
-        setScores(Array(questions.length).fill(null));
-        setCurrentQuestion(0);
-        setShowResult(false);
-    };
-
-    const totalScore = scores.reduce((a, b) => a + (b || 0), 0);
-
-    const getInterpretation = (score) => {
-        if (score <= 4) return { level: "Minimal", color: "var(--color-primary)" };
-        if (score <= 9) return { level: "Mild", color: "#eab308" };
-        if (score <= 14) return { level: "Moderate", color: "#f97316" };
-        if (score <= 19) return { level: "Moderately Severe", color: "#ef4444" };
-        return { level: "Severe", color: "#dc2626" };
-    };
-
-    const result = getInterpretation(totalScore);
-
-    if (showResult) {
-        return (
-            <div className={styles.container}>
-                <h3 className="text-center">Results</h3>
-                <div className={styles.resultCircle} style={{ borderColor: result.color }}>
-                    <span className={styles.score}>{totalScore}</span>
-                    <span className={styles.level} style={{ color: result.color }}>{result.level} Depression</span>
-                </div>
-                <p className="text-center" style={{ marginBottom: '1.5rem', opacity: 0.8 }}>
-                    Based on your answers, you may be experiencing symptoms of {result.level.toLowerCase()} depression.
-                </p>
-                <div className="text-center">
-                    <p style={{ fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-                        *This screening tool is not a medical diagnosis. Please consult with a professional.
-                    </p>
-                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
-                        <button onClick={reset} className="btn btn-outline">Retake</button>
-                        <a href="/contact" className="btn btn-primary">Book Consultation</a>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
-        <div className={styles.container}>
-            <div className={styles.progress}>
-                <div
-                    className={styles.progressBar}
-                    style={{ width: `${((currentQuestion) / questions.length) * 100}%` }}
-                ></div>
-            </div>
-
-            <h3 className={styles.question}>
-                <span className={styles.number}>{currentQuestion + 1}.</span> {questions[currentQuestion]}
-            </h3>
-
-            <div className={styles.options}>
-                {options.map((option) => (
-                    <button
-                        key={option.value}
-                        className={`${styles.optionBtn} ${scores[currentQuestion] === option.value ? styles.selected : ''}`}
-                        onClick={() => handleOptionSelect(option.value)}
-                    >
-                        {option.label}
-                    </button>
-                ))}
-            </div>
-
-            <div className={styles.controls}>
-                <button
-                    onClick={() => setCurrentQuestion(Math.max(0, currentQuestion - 1))}
-                    disabled={currentQuestion === 0}
-                    className={styles.backBtn}
-                >
-                    Back
-                </button>
-            </div>
-        </div>
+        <Screener
+            title="Depression"
+            questions={questions}
+            options={options}
+            hint="Over the last 2 weeks, how often have you been bothered by..."
+            getResult={getResult}
+        />
     );
 }

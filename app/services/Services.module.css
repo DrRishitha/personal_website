@@ -1,0 +1,246 @@
+.pageHeader {
+    text-align: center;
+    max-width: 680px;
+    margin: 0 auto 3rem;
+}
+
+.pageHeader p {
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+    margin-top: 1rem;
+}
+
+/* ===== Core services ===== */
+.servicesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+    max-width: 1040px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.serviceCard {
+    padding: 1.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    position: relative;
+    overflow: hidden;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.serviceCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.serviceTop {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 0.25rem;
+}
+
+.serviceIcon {
+    width: 56px;
+    height: 56px;
+    border-radius: 18px;
+    background: var(--gradient-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.serviceDuration {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: hsla(210, 65%, 28%, 0.08);
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.05em;
+}
+
+.serviceCard h3 {
+    font-size: 1.25rem;
+    margin: 0.25rem 0 0;
+}
+
+.serviceCard p {
+    color: var(--color-text-muted);
+    font-size: 0.93rem;
+    line-height: 1.6;
+    margin: 0;
+    flex-grow: 1;
+    max-width: none;
+}
+
+.serviceFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.75rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.servicePrice {
+    font-size: 0.85rem;
+    color: var(--color-accent);
+    font-weight: 600;
+}
+
+.serviceLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.serviceLink:hover {
+    gap: 0.6rem;
+    color: var(--color-accent);
+}
+
+/* ===== Sub sections ===== */
+.subSection {
+    margin-bottom: 4.5rem;
+}
+
+.subHeader {
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto 2rem;
+}
+
+.subHeader h2 {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.subHeader p {
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* ===== Modality cards ===== */
+.modalityGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+}
+
+.modalityCard {
+    padding: 1.75rem;
+    text-align: center;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth);
+}
+
+.modalityCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+}
+
+.modalityIcon {
+    font-size: 2.25rem;
+    margin-bottom: 0.75rem;
+}
+
+.modalityCard h3 {
+    font-size: 1.15rem;
+    margin-bottom: 0.5rem;
+}
+
+.modalityCard p {
+    font-size: 0.92rem;
+    color: var(--color-text-muted);
+    line-height: 1.55;
+    margin-bottom: 1rem;
+    max-width: none;
+}
+
+.modalityChips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.modalityChip {
+    padding: 0.3rem 0.75rem;
+    background: hsla(168, 55%, 42%, 0.1);
+    color: var(--color-accent);
+    border-radius: var(--radius-pill);
+    font-size: 0.74rem;
+    font-weight: 600;
+}
+
+.modalityLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    margin-top: 0.75rem;
+    color: var(--color-primary);
+    font-weight: 600;
+    font-size: 0.88rem;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.modalityLink:hover {
+    gap: 0.6rem;
+    color: var(--color-accent);
+}
+
+/* ===== Disclaimer ===== */
+.disclaimerBox {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    background: hsla(38, 92%, 55%, 0.1);
+    border: 1px solid hsla(38, 92%, 55%, 0.25);
+    border-left: 3px solid var(--color-warning);
+    border-radius: var(--radius-md);
+    margin-bottom: 1.5rem;
+}
+
+.disclaimerBox span {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.disclaimerBox p {
+    font-size: 0.9rem;
+    color: var(--color-text-main);
+    font-weight: 500;
+    margin: 0;
+    max-width: none;
+    line-height: 1.5;
+}
+
+/* ===== CTA ===== */
+.ctaPanel {
+    padding: 3rem 2rem;
+    text-align: center;
+    max-width: 640px;
+    margin: 2rem auto 0;
+    background: linear-gradient(135deg, hsla(210, 65%, 28%, 0.06), var(--color-surface-glass));
+}
+
+.ctaPanel h3 {
+    font-size: 1.7rem;
+    margin-bottom: 0.5rem;
+}
+
+.ctaPanel p {
+    color: var(--color-text-muted);
+    max-width: 440px;
+    margin: 0 auto 1.5rem;
+}

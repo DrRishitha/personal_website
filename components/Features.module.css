@@ -1,24 +1,99 @@
+.section {
+    padding: 5rem 0 2rem;
+}
+
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
 }
 
 .card {
-    text-align: center;
-    padding: 2.5rem 2rem;
+    position: relative;
+    padding: 2rem 1.75rem;
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    animation: fadeInUp 0.6s var(--ease-out) both;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent, hsla(210, 65%, 45%, 0.2), transparent);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+    pointer-events: none;
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.iconWrap {
+    position: relative;
+    width: 52px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+}
+
+.iconGlow {
+    position: absolute;
+    inset: 0;
+    border-radius: 16px;
+    background: var(--gradient-primary);
+    opacity: 0.95;
+    box-shadow: var(--shadow-glow-primary);
+    transition: transform var(--transition-smooth);
+}
+
+.card:hover .iconGlow {
+    transform: scale(1.06) rotate(-3deg);
+}
+
+.card[data-accent="accent"] .iconGlow {
+    background: linear-gradient(135deg, hsl(168, 55%, 42%) 0%, hsl(168, 60%, 55%) 100%);
+    box-shadow: var(--shadow-glow-accent);
+}
+
+.card[data-accent="tertiary"] .iconGlow {
+    background: linear-gradient(135deg, hsl(280, 40%, 55%) 0%, hsl(260, 55%, 65%) 100%);
+    box-shadow: 0 10px 30px hsla(280, 40%, 55%, 0.3);
 }
 
 .icon {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    position: relative;
+    color: white;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card h3 {
-    margin-bottom: 0.75rem;
+    font-size: 1.15rem;
+    margin-bottom: 0.6rem;
+    letter-spacing: -0.01em;
 }
 
 .card p {
     color: var(--color-text-muted);
+    font-size: 0.92rem;
     line-height: 1.6;
+    margin: 0;
+    max-width: none;
 }

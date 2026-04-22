@@ -38,7 +38,9 @@ export default function Accordion({ items, allowMultiple = false }) {
                         </button>
                         <div className={styles.body}>
                             <div className={styles.bodyInner}>
-                                {typeof item.answer === 'string' ? <p>{item.answer}</p> : item.answer}
+                                <div className={styles.bodyContent}>
+                                    {typeof item.answer === 'string' ? <p>{item.answer}</p> : item.answer}
+                                </div>
                             </div>
                         </div>
                     </div>

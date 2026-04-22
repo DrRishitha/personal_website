@@ -1,25 +1,41 @@
 .dotContainer {
-    width: 100%;
-    height: 200px;
     position: relative;
-    background: hsla(210, 30%, 8%, 0.95);
+    width: 100%;
+    height: 220px;
+    background: radial-gradient(ellipse at center, hsl(215, 45%, 12%) 0%, hsl(215, 55%, 6%) 100%);
     border-radius: var(--radius-lg);
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: inset 0 0 60px hsla(0, 0%, 0%, 0.5);
+    border: 1px solid hsla(210, 30%, 30%, 0.3);
+}
+
+.dotContainer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background:
+        radial-gradient(circle at 20% 30%, hsla(205, 70%, 60%, 0.08), transparent 50%),
+        radial-gradient(circle at 80% 70%, hsla(168, 70%, 55%, 0.08), transparent 50%);
+    pointer-events: none;
 }
 
 .dot {
-    width: 30px;
-    height: 30px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
-    background: var(--color-accent);
-    box-shadow: 0 0 20px var(--color-accent), 0 0 40px hsla(160, 25%, 45%, 0.3);
+    background: radial-gradient(circle at 30% 30%, hsl(168, 80%, 70%), hsl(168, 60%, 50%));
+    box-shadow:
+        0 0 20px hsla(168, 70%, 55%, 0.9),
+        0 0 50px hsla(168, 70%, 55%, 0.5),
+        inset 0 0 10px hsla(0, 0%, 100%, 0.3);
     position: absolute;
     animation-timing-function: ease-in-out;
     animation-iteration-count: infinite;
     animation-play-state: paused;
+    z-index: 1;
 }
 
 .dot.active {
@@ -43,22 +59,20 @@
 }
 
 @keyframes moveHorizontal {
-    0%, 100% { left: 5%; }
-    50% { left: calc(95% - 30px); }
+    0%, 100% { left: 8%; }
+    50% { left: calc(92% - 36px); }
 }
 
 @keyframes moveVertical {
-    0%, 100% { top: 10%; }
-    50% { top: calc(90% - 30px); }
+    0%, 100% { top: 12%; }
+    50% { top: calc(88% - 36px); }
 }
 
 @keyframes moveDiagonal {
-    0%, 100% { left: 5%; top: 10%; }
-    50% { left: calc(95% - 30px); top: calc(90% - 30px); }
+    0%, 100% { left: 8%; top: 12%; }
+    50% { left: calc(92% - 36px); top: calc(88% - 36px); }
 }
 
 @media (max-width: 768px) {
-    .dotContainer {
-        height: 180px;
-    }
+    .dotContainer { height: 190px; }
 }

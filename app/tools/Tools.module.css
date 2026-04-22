@@ -1,0 +1,173 @@
+.hero {
+    text-align: center;
+    padding: 1.5rem 0 2.5rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.sectionTitle {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.sectionTitle h2 {
+    margin: 0;
+    font-size: 1.6rem;
+}
+
+.sectionTitle .count {
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+}
+
+.card {
+    position: relative;
+    padding: 1.75rem;
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    -webkit-backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    transition: transform var(--transition-smooth), box-shadow var(--transition-smooth), border-color var(--transition-smooth);
+    overflow: hidden;
+    cursor: pointer;
+    text-align: left;
+    color: inherit;
+    font-family: inherit;
+    width: 100%;
+    animation: fadeInUp 0.5s var(--ease-out) both;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--color-border-strong);
+}
+
+.card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+.card:hover::after { opacity: 1; }
+
+.iconTile {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    background: hsla(210, 65%, 28%, 0.08);
+    color: var(--color-primary);
+    transition: transform var(--transition-smooth);
+}
+
+.card:hover .iconTile {
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.cardTitleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+}
+
+.card h3 {
+    font-size: 1.1rem;
+    margin: 0;
+    letter-spacing: -0.01em;
+}
+
+.tag {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.65rem;
+    background: hsla(168, 55%, 42%, 0.12);
+    color: var(--color-accent);
+    border-radius: var(--radius-pill);
+}
+
+.card[data-category="Screening"] .tag {
+    background: hsla(210, 65%, 28%, 0.1);
+    color: var(--color-primary);
+}
+
+.card p {
+    color: var(--color-text-muted);
+    font-size: 0.9rem;
+    line-height: 1.55;
+    margin: 0;
+    flex-grow: 1;
+    max-width: none;
+}
+
+.cardCta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    font-size: 0.88rem;
+    margin-top: auto;
+    transition: gap var(--transition-fast), color var(--transition-fast);
+}
+
+.card:hover .cardCta {
+    gap: 0.65rem;
+    color: var(--color-accent);
+}
+
+.emdrCard {
+    border: 1.5px solid hsla(168, 55%, 42%, 0.35);
+    background: linear-gradient(135deg, hsla(168, 55%, 42%, 0.08), var(--color-surface-glass));
+}
+
+.emdrCard .iconTile {
+    background: var(--gradient-primary);
+    color: white;
+    box-shadow: var(--shadow-glow-primary);
+}
+
+.backBtn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 600px) {
+    .sectionTitle h2 { font-size: 1.35rem; }
+}

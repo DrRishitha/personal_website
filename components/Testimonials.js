@@ -2,25 +2,39 @@
 
 import Carousel from '@/components/shared/Carousel';
 import { testimonials } from '@/data/testimonials';
+import styles from './Testimonials.module.css';
 
 export default function Testimonials() {
     return (
-        <section style={{ background: 'var(--color-primary)', color: 'white', padding: '6rem 0' }}>
-            <div className="container text-center">
-                <h2 style={{ color: 'white', marginBottom: '3rem' }}>Patient Stories</h2>
-                <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        <section className={styles.section}>
+            <div className={styles.ambient} aria-hidden="true"></div>
+            <div className="container">
+                <div className="section-header">
+                    <span className="eyebrow" style={{ background: 'hsla(255, 100%, 100%, 0.12)', color: 'white', borderColor: 'hsla(255, 100%, 100%, 0.2)' }}>
+                        Patient stories
+                    </span>
+                    <h2 className={styles.heading}>Real journeys, real healing</h2>
+                </div>
+
+                <div className={styles.wrapper}>
+                    <svg className={styles.quoteMark} viewBox="0 0 40 30" aria-hidden="true">
+                        <path d="M11 0H0l6 15v15h15V10h-10zM35 0H24l6 15v15h15V10H35z" fill="currentColor" />
+                    </svg>
                     <Carousel autoPlay={7000} showDots showArrows={false}>
                         {testimonials.map(t => (
-                            <div key={t.id}>
-                                <blockquote style={{ fontSize: '1.4rem', fontStyle: 'italic', marginBottom: '1.5rem', lineHeight: 1.6 }}>
-                                    &quot;{t.quote}&quot;
+                            <div key={t.id} className={styles.slide}>
+                                <blockquote className={styles.quote}>
+                                    &ldquo;{t.quote}&rdquo;
                                 </blockquote>
-                                <cite style={{ fontStyle: 'normal', fontWeight: 'bold', display: 'block' }}>
-                                    — {t.author}
+                                <cite className={styles.author}>
+                                    <span className={styles.authorAvatar}>
+                                        {t.author?.charAt(0) || 'A'}
+                                    </span>
+                                    <span>
+                                        <strong>{t.author}</strong>
+                                        <small>{t.condition}</small>
+                                    </span>
                                 </cite>
-                                <span style={{ fontSize: '0.85rem', opacity: 0.7, marginTop: '0.25rem', display: 'block' }}>
-                                    {t.condition}
-                                </span>
                             </div>
                         ))}
                     </Carousel>
