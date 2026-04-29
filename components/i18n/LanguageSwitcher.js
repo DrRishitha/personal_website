@@ -29,13 +29,31 @@ export default function LanguageSwitcher({ variant = 'desktop' }) {
         };
     }, [open]);
 
+    // Mobile variant: render as a horizontal segmented control. No dropdown
+    // overlay so nothing on the page can sit on top of it.
+    if (variant === 'mobile') {
+        return (
+            <div className={styles.segmented} role="radiogroup" aria-label={t('nav.language')}>
+                {languages.map((l) => (
+                    <button
+                        key={l.code}
+                        type="button"
+                        role="radio"
+                        aria-checked={lang === l.code}
+                        className={`${styles.segment} ${lang === l.code ? styles.segmentActive : ''}`}
+                        onClick={() => setLang(l.code)}
+                    >
+                        <span className={styles.segmentNative}>{l.native}</span>
+                    </button>
+                ))}
+            </div>
+        );
+    }
+
     const current = languages.find((l) => l.code === lang) || languages[0];
 
     return (
-        <div
-            ref={containerRef}
-            className={`${styles.wrapper} ${variant === 'mobile' ? styles.wrapperMobile : ''}`}
-        >
+        <div ref={containerRef} className={styles.wrapper}>
             <button
                 type="button"
                 className={styles.trigger}

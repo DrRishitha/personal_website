@@ -118,6 +118,45 @@
     transform: translateX(-50%);
 }
 
+/* Mobile inline segmented control — no dropdown so nothing can cover it */
+.segmented {
+    display: inline-flex;
+    gap: 0.3rem;
+    padding: 0.35rem;
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+}
+
+.segment {
+    padding: 0.55rem 0.95rem;
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-pill);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition: background var(--transition-fast), color var(--transition-fast);
+    line-height: 1;
+}
+
+.segment:hover {
+    color: var(--color-primary);
+}
+
+.segmentActive {
+    background: var(--color-surface);
+    color: var(--color-primary);
+    font-weight: 600;
+    box-shadow: var(--shadow-sm);
+}
+
+.segmentNative {
+    display: inline-block;
+}
+
 @keyframes menuIn {
     from {
         opacity: 0;

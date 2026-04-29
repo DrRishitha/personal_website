@@ -376,7 +376,7 @@
         grid-template-columns: 1fr;
         gap: 2.5rem;
     }
-    .photo { max-width: 280px; margin: 0 auto; }
+    .photo { width: 100%; max-width: 280px; margin: 0 auto; }
     .splitRow { grid-template-columns: 1fr; }
 }
 

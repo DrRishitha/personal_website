@@ -87,7 +87,21 @@ export default function Header() {
             <div
                 className={`${styles.mobileMenu} ${isOpen ? styles.menuOpen : ''}`}
                 aria-hidden={!isOpen}
+                onClick={(e) => {
+                    if (e.target === e.currentTarget) closeMenu();
+                }}
             >
+                <button
+                    type="button"
+                    className={styles.mobileClose}
+                    onClick={closeMenu}
+                    aria-label="Close menu"
+                >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M18 6L6 18M6 6L18 18" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                    <span>Close</span>
+                </button>
                 <nav className={styles.navMobile} aria-label="Mobile">
                     {NAV_LINKS.map((link, i) => (
                         <Link

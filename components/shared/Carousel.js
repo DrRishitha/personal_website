@@ -33,7 +33,10 @@ export default function Carousel({ children, autoPlay = 6000, showDots = true, s
             <div className={styles.track}>
                 <div
                     className={styles.slider}
-                    style={{ transform: `translateX(-${current * 100}%)` }}
+                    style={{
+                        width: `${items.length * 100}%`,
+                        transform: `translateX(-${current * (100 / items.length)}%)`,
+                    }}
                 >
                     {items.map((child, index) => (
                         <div key={index} className={styles.slide}>
