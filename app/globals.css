@@ -20,6 +20,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Prevent long unbreakable strings (URLs, transliterations, long compound
+   words in HI/TE) from blowing out cards on narrow screens. */
+h1, h2, h3, h4, h5, h6, p, li, a, button, span, blockquote, label {
+  overflow-wrap: anywhere;
 }
 
 /* Global animated background */
@@ -314,6 +321,32 @@ img {
   background-clip: text;
   color: transparent;
   -webkit-text-fill-color: transparent;
+  display: inline-block;
+  padding: 0.05em 0.02em 0.18em;
+}
+
+/* Non-Latin scripts need extra vertical room for matras / vowel marks */
+:lang(hi) h1,
+:lang(hi) h2,
+:lang(hi) h3,
+:lang(hi) h4,
+:lang(te) h1,
+:lang(te) h2,
+:lang(te) h3,
+:lang(te) h4 {
+  line-height: 1.45;
+  letter-spacing: 0;
+}
+
+:lang(hi) h1,
+:lang(te) h1 {
+  line-height: 1.35;
+}
+
+:lang(hi) .gradient-text,
+:lang(te) .gradient-text {
+  padding-bottom: 0.28em;
+  line-height: 1.45;
 }
 
 /* ===== Animations ===== */

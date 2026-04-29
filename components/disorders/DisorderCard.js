@@ -1,8 +1,11 @@
 "use client";
 
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './DisorderCard.module.css';
 
 export default function DisorderCard({ disorder, isUnlocked }) {
+    const { t } = useLanguage();
+
     return (
         <article className={styles.card}>
             <div className={styles.header}>
@@ -17,7 +20,7 @@ export default function DisorderCard({ disorder, isUnlocked }) {
                 <p className={styles.description}>{disorder.briefDescription}</p>
 
                 <div className={styles.section}>
-                    <h4>Common symptoms</h4>
+                    <h4>{t('disorders.commonSymptoms')}</h4>
                     <ul className={styles.list}>
                         {disorder.symptoms.map((s, i) => (
                             <li key={i}>{s}</li>
@@ -26,16 +29,16 @@ export default function DisorderCard({ disorder, isUnlocked }) {
                 </div>
 
                 <div className={styles.section}>
-                    <h4>Treatment approaches</h4>
+                    <h4>{t('disorders.treatmentApproaches')}</h4>
                     <div className={styles.tags}>
-                        {disorder.treatmentApproaches.map((t, i) => (
-                            <span key={i} className={styles.tag}>{t}</span>
+                        {disorder.treatmentApproaches.map((tx, i) => (
+                            <span key={i} className={styles.tag}>{tx}</span>
                         ))}
                     </div>
                 </div>
 
                 <div className={styles.section}>
-                    <h4>When to seek help</h4>
+                    <h4>{t('disorders.whenToSeek')}</h4>
                     <p>{disorder.whenToSeekHelp}</p>
                 </div>
             </div>
@@ -43,7 +46,7 @@ export default function DisorderCard({ disorder, isUnlocked }) {
             {!isUnlocked && (
                 <div className={styles.lockOverlay}>
                     <span className={styles.lockIcon}>🔒</span>
-                    <p>Available after consultation</p>
+                    <p>{t('disorders.afterConsultation')}</p>
                 </div>
             )}
         </article>

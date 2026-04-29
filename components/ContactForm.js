@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from 'react';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './ContactForm.module.css';
 
 const WA_NUMBER = '917569200837';
 const EMAIL = 'dr.rishithakotla@gmail.com';
 
 export default function ContactForm() {
-    const [form, setForm] = useState({ name: '', email: '', subject: 'General inquiry', message: '' });
+    const { t } = useLanguage();
+    const [form, setForm] = useState({ name: '', email: '', subject: t('form.topicGeneral'), message: '' });
     const [errors, setErrors] = useState({});
-    const [status, setStatus] = useState('idle'); // idle | success
+    const [status, setStatus] = useState('idle');
 
     const update = (field) => (e) => {
         setForm(f => ({ ...f, [field]: e.target.value }));
@@ -18,11 +20,11 @@ export default function ContactForm() {
 
     const validate = () => {
         const next = {};
-        if (!form.name.trim()) next.name = 'Please enter your name.';
-        if (!form.email.trim()) next.email = 'Please enter your email.';
-        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = 'Please enter a valid email.';
-        if (!form.message.trim()) next.message = 'Please tell us how we can help.';
-        else if (form.message.trim().length < 10) next.message = 'Please share a little more detail.';
+        if (!form.name.trim()) next.name = t('form.errName');
+        if (!form.email.trim()) next.email = t('form.errEmail');
+        else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) next.email = t('form.errEmailValid');
+        if (!form.message.trim()) next.message = t('form.errMessage');
+        else if (form.message.trim().length < 10) next.message = t('form.errMessageShort');
         return next;
     };
 
@@ -45,7 +47,7 @@ export default function ContactForm() {
             setErrors(v);
             return;
         }
-        const msg = `Hello Dr. Kotla,\n\nName: ${form.name}\nEmail: ${form.email}\nTopic: ${form.subject}\n\n${form.message}`;
+        const msg = `Name: ${form.name}\nEmail: ${form.email}\nTopic: ${form.subject}\n\n${form.message}`;
         const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank', 'noopener,noreferrer');
         setStatus('success');
@@ -55,17 +57,16 @@ export default function ContactForm() {
         return (
             <div className={styles.successCard}>
                 <div className={styles.successIcon}>✅</div>
-                <h3>Message ready to send</h3>
+                <h3>{t('form.successHeading')}</h3>
                 <p>
-                    We&apos;ve prepared your message. If your email or WhatsApp didn&apos;t open automatically,
-                    please try again or contact us directly at{' '}
+                    {t('form.successBody1')}{' '}
                     <a href={`mailto:${EMAIL}`}>{EMAIL}</a>.
                 </p>
                 <button
-                    onClick={() => { setStatus('idle'); setForm({ name: '', email: '', subject: 'General inquiry', message: '' }); }}
+                    onClick={() => { setStatus('idle'); setForm({ name: '', email: '', subject: t('form.topicGeneral'), message: '' }); }}
                     className="btn btn-outline"
                 >
-                    Send another message
+                    {t('form.sendAnother')}
                 </button>
             </div>
         );
@@ -75,12 +76,12 @@ export default function ContactForm() {
         <form className={styles.form} onSubmit={sendByEmail} noValidate>
             <div className={styles.row}>
                 <div className={styles.field}>
-                    <label htmlFor="cf-name" className="form-label">Your name</label>
+                    <label htmlFor="cf-name" className="form-label">{t('form.name')}</label>
                     <input
                         id="cf-name"
                         type="text"
                         className={`form-input ${errors.name ? styles.inputError : ''}`}
-                        placeholder="Jane Doe"
+                        placeholder={t('form.namePlaceholder')}
                         value={form.name}
                         onChange={update('name')}
                         autoComplete="name"
@@ -88,12 +89,12 @@ export default function ContactForm() {
                     {errors.name && <span className={styles.errorText}>{errors.name}</span>}
                 </div>
                 <div className={styles.field}>
-                    <label htmlFor="cf-email" className="form-label">Email address</label>
+                    <label htmlFor="cf-email" className="form-label">{t('form.email')}</label>
                     <input
                         id="cf-email"
                         type="email"
                         className={`form-input ${errors.email ? styles.inputError : ''}`}
-                        placeholder="jane@example.com"
+                        placeholder={t('form.emailPlaceholder')}
                         value={form.email}
                         onChange={update('email')}
                         autoComplete="email"
@@ -103,28 +104,28 @@ export default function ContactForm() {
             </div>
 
             <div className={styles.field}>
-                <label htmlFor="cf-subject" className="form-label">Topic</label>
+                <label htmlFor="cf-subject" className="form-label">{t('form.topic')}</label>
                 <select
                     id="cf-subject"
                     className="form-input"
                     value={form.subject}
                     onChange={update('subject')}
                 >
-                    <option>General inquiry</option>
-                    <option>Book an appointment</option>
-                    <option>Medication question</option>
-                    <option>Therapy question</option>
-                    <option>Second opinion</option>
-                    <option>Something else</option>
+                    <option>{t('form.topicGeneral')}</option>
+                    <option>{t('form.topicAppointment')}</option>
+                    <option>{t('form.topicMedication')}</option>
+                    <option>{t('form.topicTherapy')}</option>
+                    <option>{t('form.topicSecondOpinion')}</option>
+                    <option>{t('form.topicOther')}</option>
                 </select>
             </div>
 
             <div className={styles.field}>
-                <label htmlFor="cf-message" className="form-label">Message</label>
+                <label htmlFor="cf-message" className="form-label">{t('form.message')}</label>
                 <textarea
                     id="cf-message"
                     className={`form-textarea ${errors.message ? styles.inputError : ''}`}
-                    placeholder="How can we help?"
+                    placeholder={t('form.messagePlaceholder')}
                     value={form.message}
                     onChange={update('message')}
                 />
@@ -133,16 +134,14 @@ export default function ContactForm() {
 
             <div className={styles.actions}>
                 <button type="submit" className="btn btn-primary">
-                    ✉️ Send via Email
+                    {t('form.sendEmail')}
                 </button>
                 <button type="button" onClick={sendByWhatsApp} className={`btn ${styles.whatsapp}`}>
-                    💬 Send via WhatsApp
+                    {t('form.sendWhatsapp')}
                 </button>
             </div>
 
-            <p className={styles.privacyNote}>
-                🔒 This form opens your email or WhatsApp — nothing is stored on our servers.
-            </p>
+            <p className={styles.privacyNote}>{t('form.privacy')}</p>
         </form>
     );
 }

@@ -2,23 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './DepressionScreener.module.css';
 
-/**
- * Reusable screener component.
- *
- * Props:
- *   title:         string shown as the result name (e.g. "Depression")
- *   questions:     string[]
- *   options:       [{ label, value }]
- *   hint:          string shown above each question (optional)
- *   reverseScored: number[] of question indices that are reverse-scored (optional)
- *   getResult:     (totalScore) => { level, color, description }
- *   disclaimer:    string (optional override)
- *   preamble:      { prompt, onYes?: boolean } – if provided, shows a yes/no gate first.
- *                  When the user picks "No", render a negative-screen result.
- *   negativeResult: { level, color, description } for the preamble "No" path.
- */
 export default function Screener({
     title,
     questions,
@@ -26,10 +12,12 @@ export default function Screener({
     hint,
     reverseScored = [],
     getResult,
-    disclaimer = "This screening tool is not a medical diagnosis. Please consult with a mental health professional for evaluation.",
+    disclaimer,
     preamble,
     negativeResult,
 }) {
+    const { t } = useLanguage();
+    const effectiveDisclaimer = disclaimer || t('screener.disclaimer');
     const [hasAnsweredPreamble, setHasAnsweredPreamble] = useState(!preamble);
     const [preambleAnswer, setPreambleAnswer] = useState(null);
     const [currentQuestion, setCurrentQuestion] = useState(0);
@@ -65,7 +53,6 @@ export default function Screener({
     const totalScore = scores.reduce((a, b) => a + (b || 0), 0);
     const result = showResult ? getResult(totalScore) : null;
 
-    // Preamble gate
     if (preamble && !hasAnsweredPreamble) {
         return (
             <div className={styles.container}>
@@ -77,28 +64,27 @@ export default function Screener({
                         className={styles.optionBtn}
                         onClick={() => { setPreambleAnswer(true); setHasAnsweredPreamble(true); }}
                     >
-                        Yes
+                        {t('screener.yes')}
                     </button>
                     <button
                         className={styles.optionBtn}
                         onClick={() => { setPreambleAnswer(false); setHasAnsweredPreamble(true); }}
                     >
-                        No
+                        {t('screener.no')}
                     </button>
                 </div>
             </div>
         );
     }
 
-    // Preamble negative path
     if (preamble && preambleAnswer === false) {
         const r = negativeResult;
-        return <ResultCard title={title} total={0} max={0} result={r} disclaimer={disclaimer} onReset={reset} hideRetake={false} />;
+        return <ResultCard title={title} total={0} max={0} result={r} disclaimer={effectiveDisclaimer} onReset={reset} />;
     }
 
     if (showResult && result) {
         const max = questions.length * options[options.length - 1].value;
-        return <ResultCard title={title} total={totalScore} max={max} result={result} disclaimer={disclaimer} onReset={reset} />;
+        return <ResultCard title={title} total={totalScore} max={max} result={result} disclaimer={effectiveDisclaimer} onReset={reset} />;
     }
 
     const progress = (currentQuestion / questions.length) * 100;
@@ -107,7 +93,7 @@ export default function Screener({
     return (
         <div className={styles.container}>
             <div className={styles.progressHeader}>
-                <span>Question {currentQuestion + 1} of {questions.length}</span>
+                <span>{t('screener.questionOf').replace('{{current}}', currentQuestion + 1).replace('{{total}}', questions.length)}</span>
                 <span>{Math.round(progress)}%</span>
             </div>
             <div className={styles.progress}>
@@ -147,12 +133,12 @@ export default function Screener({
                     className={styles.backBtn}
                 >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
-                    Back
+                    {t('screener.back')}
                 </button>
                 <span style={{ fontSize: '0.8rem', color: 'var(--color-text-subtle)' }}>
-                    Tap an option to continue
+                    {t('screener.tapOption')}
                 </span>
             </div>
         </div>
@@ -160,6 +146,7 @@ export default function Screener({
 }
 
 function ResultCard({ title, total, max, result, disclaimer, onReset }) {
+    const { t } = useLanguage();
     const radius = 75;
     const circumference = 2 * Math.PI * radius;
     const ratio = max > 0 ? Math.min(1, total / max) : 0;
@@ -168,8 +155,8 @@ function ResultCard({ title, total, max, result, disclaimer, onReset }) {
     return (
         <div className={styles.container}>
             <div className={styles.resultHeader}>
-                <h3>Your {title} Result</h3>
-                <span>Thank you for completing this screening</span>
+                <h3>{t('screener.yourResult').replace('{{title}}', title)}</h3>
+                <span>{t('screener.thanks')}</span>
             </div>
 
             <div className={styles.resultCircle}>
@@ -187,7 +174,7 @@ function ResultCard({ title, total, max, result, disclaimer, onReset }) {
                 </svg>
                 <div className={styles.resultCircleInner}>
                     <span className={styles.score}>{total}</span>
-                    <span className={styles.scoreLabel}>{max ? `of ${max}` : 'score'}</span>
+                    <span className={styles.scoreLabel}>{max ? t('screener.scoreOf').replace('{{max}}', max) : t('screener.score')}</span>
                 </div>
             </div>
 
@@ -201,7 +188,7 @@ function ResultCard({ title, total, max, result, disclaimer, onReset }) {
             </div>
 
             <p className={styles.resultDescription}>
-                {result.description || `Your score suggests ${result.level.toLowerCase()}.`}
+                {result.description || result.level}
             </p>
 
             <div className={styles.resultDisclaimer}>
@@ -210,10 +197,10 @@ function ResultCard({ title, total, max, result, disclaimer, onReset }) {
 
             <div className={styles.resultActions}>
                 <button onClick={onReset} className="btn btn-outline">
-                    Retake
+                    {t('screener.retake')}
                 </button>
                 <Link href="/contact" className="btn btn-primary">
-                    Book Consultation
+                    {t('screener.bookConsultation')}
                 </Link>
             </div>
         </div>

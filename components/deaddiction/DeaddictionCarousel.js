@@ -1,10 +1,14 @@
 "use client";
 
 import { useRef } from 'react';
-import { deaddictionMethods } from '@/data/deaddictionMethods';
+import { deaddictionMethodsByLang } from '@/data/practice.localized';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './DeaddictionCarousel.module.css';
 
-export default function DeaddictionCarousel() {
+export default function DeaddictionCarousel({ methods }) {
+    const { lang } = useLanguage();
+    const fallback = deaddictionMethodsByLang[lang] || deaddictionMethodsByLang.en;
+    const items = methods || fallback;
     const scrollRef = useRef(null);
 
     const scrollLeft = () => {
@@ -24,7 +28,7 @@ export default function DeaddictionCarousel() {
             </button>
 
             <div className={styles.scrollContainer} ref={scrollRef}>
-                {deaddictionMethods.map(method => (
+                {items.map(method => (
                     <div key={method.id} className={styles.card}>
                         <span className={styles.icon}>{method.icon}</span>
                         <h4 className={styles.name}>{method.name}</h4>

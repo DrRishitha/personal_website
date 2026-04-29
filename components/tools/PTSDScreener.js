@@ -1,28 +1,32 @@
 "use client";
 
 import Screener from './Screener';
-import { pcPtsd5 } from '@/data/screenerQuestions';
-
-const getResult = (score) => {
-    for (const level of pcPtsd5.interpretation) {
-        if (score <= level.max) return level;
-    }
-    return pcPtsd5.interpretation[pcPtsd5.interpretation.length - 1];
-};
+import { pcPtsd5ByLang } from '@/data/clinical.localized';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 
 export default function PTSDScreener() {
+    const { t, lang } = useLanguage();
+    const data = pcPtsd5ByLang[lang] || pcPtsd5ByLang.en;
+
+    const getResult = (score) => {
+        for (const level of data.interpretation) {
+            if (score <= level.max) return level;
+        }
+        return data.interpretation[data.interpretation.length - 1];
+    };
+
     return (
         <Screener
-            title="PTSD Screen"
-            questions={pcPtsd5.questions}
-            options={pcPtsd5.options}
-            hint="In the past month, have you..."
+            title={t('screener.ptsdTitle')}
+            questions={data.questions}
+            options={data.options}
+            hint={t('screener.ptsdHint')}
             getResult={getResult}
-            preamble={{ prompt: pcPtsd5.preamble }}
+            preamble={{ prompt: data.preamble }}
             negativeResult={{
-                level: "Negative Screen",
-                color: "hsl(150, 55%, 45%)",
-                description: "Based on your response, a PTSD screening is not indicated at this time."
+                level: t('screener.negativeScreen'),
+                color: 'hsl(150, 55%, 45%)',
+                description: t('screener.negativeScreenDesc'),
             }}
         />
     );

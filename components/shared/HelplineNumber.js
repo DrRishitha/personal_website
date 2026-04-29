@@ -1,16 +1,18 @@
+"use client";
+
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './HelplineNumber.module.css';
 
 export default function HelplineNumber({ compact = false }) {
+    const { t } = useLanguage();
     return (
         <div className={`${styles.helpline} ${compact ? styles.compact : ''}`}>
-            {!compact && <p className={styles.label}>24/7 Mental Health Helpline (Toll-Free)</p>}
+            {!compact && <p className={styles.label}>{t('helpline.label')}</p>}
             <a href="tel:18005990019" className={styles.number}>
-                KIRAN: 1800-599-0019
+                {t('helpline.kiranName')}: 1800-599-0019
             </a>
             {!compact && (
-                <p className={styles.sublabel}>
-                    Available 24/7 in Hindi, English &amp; regional languages
-                </p>
+                <p className={styles.sublabel}>{t('helpline.sublabel')}</p>
             )}
         </div>
     );

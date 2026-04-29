@@ -4,19 +4,22 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import styles from './Header.module.css';
-
-const NAV_LINKS = [
-    { href: '/', label: 'Home' },
-    { href: '/about', label: 'About' },
-    { href: '/services', label: 'Services' },
-    { href: '/tools', label: 'Tools' },
-    { href: '/disorders', label: 'Disorders' },
-];
+import { useLanguage } from '@/components/i18n/LanguageProvider';
+import LanguageSwitcher from '@/components/i18n/LanguageSwitcher';
 
 export default function Header() {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const pathname = usePathname();
+    const { t } = useLanguage();
+
+    const NAV_LINKS = [
+        { href: '/', label: t('nav.home') },
+        { href: '/about', label: t('nav.about') },
+        { href: '/services', label: t('nav.services') },
+        { href: '/tools', label: t('nav.tools') },
+        { href: '/disorders', label: t('nav.disorders') },
+    ];
 
     useEffect(() => {
         const onScroll = () => setScrolled(window.scrollY > 20);
@@ -61,8 +64,11 @@ export default function Header() {
                             </Link>
                         );
                     })}
+                    <div className={styles.langSlot}>
+                        <LanguageSwitcher />
+                    </div>
                     <Link href="/contact" className={`btn btn-primary ${styles.cta}`}>
-                        Book Consultation
+                        {t('nav.bookConsultation')}
                     </Link>
                 </nav>
 
@@ -94,12 +100,15 @@ export default function Header() {
                             {link.label}
                         </Link>
                     ))}
+                    <div className={styles.mobileLangSlot}>
+                        <LanguageSwitcher variant="mobile" />
+                    </div>
                     <Link
                         href="/contact"
                         className={`btn btn-primary btn-lg ${styles.mobileCta}`}
                         onClick={closeMenu}
                     >
-                        Book Consultation
+                        {t('nav.bookConsultation')}
                     </Link>
                 </nav>
             </div>

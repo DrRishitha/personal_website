@@ -3,10 +3,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { useChatContext } from './ChatProvider';
 import ChatMessage from './ChatMessage';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './ChatWidget.module.css';
 
 export default function ChatWidget() {
     const { messages, sendMessage, isLoading, clearChat } = useChatContext();
+    const { t } = useLanguage();
     const [isOpen, setIsOpen] = useState(false);
     const [input, setInput] = useState('');
     const messagesEndRef = useRef(null);
@@ -30,11 +32,10 @@ export default function ChatWidget() {
 
     return (
         <>
-            {/* Floating Button */}
             <button
                 className={styles.floatingBtn}
                 onClick={() => setIsOpen(!isOpen)}
-                aria-label={isOpen ? 'Close chat' : 'Open chat assistant'}
+                aria-label={isOpen ? t('chat.closeLabel') : t('chat.openLabel')}
             >
                 {isOpen ? (
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -47,28 +48,26 @@ export default function ChatWidget() {
                 )}
             </button>
 
-            {/* Chat Window */}
             {isOpen && (
                 <div className={styles.chatWindow}>
                     <div className={styles.chatHeader}>
                         <div className={styles.headerInfo}>
                             <div className={styles.avatar}>👩‍⚕️</div>
                             <div className={styles.headerText}>
-                                <h4 className={styles.chatTitle}>Dr. Kotla&apos;s Assistant</h4>
+                                <h4 className={styles.chatTitle}>{t('chat.title')}</h4>
                                 <span className={styles.chatStatus}>
                                     <span className={styles.statusDot} />
-                                    Online
+                                    {t('chat.online')}
                                 </span>
                             </div>
                         </div>
-                        <button onClick={clearChat} className={styles.clearBtn} title="Clear chat">
+                        <button onClick={clearChat} className={styles.clearBtn} title={t('chat.clearLabel')}>
                             <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
                                 <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </button>
                     </div>
 
-                    {/* Messages */}
                     <div className={styles.messagesArea}>
                         {messages.map(msg => (
                             <ChatMessage key={msg.id} message={msg} />
@@ -85,7 +84,6 @@ export default function ChatWidget() {
                         <div ref={messagesEndRef} />
                     </div>
 
-                    {/* Quick Replies */}
                     {lastBotMsg?.quickReplies?.length > 0 && (
                         <div className={styles.quickReplies}>
                             {lastBotMsg.quickReplies.map((reply, i) => (
@@ -96,7 +94,6 @@ export default function ChatWidget() {
                         </div>
                     )}
 
-                    {/* Input */}
                     <div className={styles.inputArea}>
                         <input
                             type="text"
@@ -104,7 +101,7 @@ export default function ChatWidget() {
                             value={input}
                             onChange={(e) => setInput(e.target.value)}
                             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-                            placeholder="Type a message..."
+                            placeholder={t('chat.placeholder')}
                             disabled={isLoading}
                         />
                         <button className={styles.sendBtn} onClick={handleSend} disabled={isLoading || !input.trim()}>

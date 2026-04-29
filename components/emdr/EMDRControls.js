@@ -1,16 +1,20 @@
 "use client";
 
-import { dotDirections } from '@/data/emdrConfig';
+import { dotDirectionsByLang } from '@/data/clinical.localized';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './EMDRControls.module.css';
 
 export default function EMDRControls({ speed, setSpeed, direction, setDirection, volume, setVolume, isPlaying, onTogglePlay, audioEnabled, setAudioEnabled }) {
+    const { t, lang } = useLanguage();
+    const dotDirections = dotDirectionsByLang[lang] || dotDirectionsByLang.en;
+
     return (
         <div className={styles.controls}>
             <div className={styles.row}>
                 <div className={styles.control}>
-                    <label className={styles.label}>Speed</label>
+                    <label className={styles.label}>{t('emdrControls.speed')}</label>
                     <div className={styles.sliderRow}>
-                        <span className={styles.sliderLabel}>Slow</span>
+                        <span className={styles.sliderLabel}>{t('emdrControls.slow')}</span>
                         <input
                             type="range"
                             min="0.3"
@@ -20,12 +24,12 @@ export default function EMDRControls({ speed, setSpeed, direction, setDirection,
                             onChange={(e) => setSpeed(parseFloat(e.target.value))}
                             className={styles.slider}
                         />
-                        <span className={styles.sliderLabel}>Fast</span>
+                        <span className={styles.sliderLabel}>{t('emdrControls.fast')}</span>
                     </div>
                 </div>
 
                 <div className={styles.control}>
-                    <label className={styles.label}>Direction</label>
+                    <label className={styles.label}>{t('emdrControls.direction')}</label>
                     <div className={styles.directionBtns}>
                         {dotDirections.map(d => (
                             <button
@@ -42,13 +46,13 @@ export default function EMDRControls({ speed, setSpeed, direction, setDirection,
 
             <div className={styles.row}>
                 <div className={styles.control}>
-                    <label className={styles.label}>Audio</label>
+                    <label className={styles.label}>{t('emdrControls.audio')}</label>
                     <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
                         <button
                             className={`${styles.dirBtn} ${audioEnabled ? styles.dirActive : ''}`}
                             onClick={() => setAudioEnabled(!audioEnabled)}
                         >
-                            {audioEnabled ? '🔊 On' : '🔇 Off'}
+                            {audioEnabled ? t('emdrControls.audioOn') : t('emdrControls.audioOff')}
                         </button>
                         {audioEnabled && (
                             <input
@@ -70,7 +74,7 @@ export default function EMDRControls({ speed, setSpeed, direction, setDirection,
                     onClick={onTogglePlay}
                     style={{ alignSelf: 'flex-end' }}
                 >
-                    {isPlaying ? '⏸ Pause' : '▶ Resume'}
+                    {isPlaying ? t('emdrControls.pause') : t('emdrControls.resume')}
                 </button>
             </div>
         </div>

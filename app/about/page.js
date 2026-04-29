@@ -1,98 +1,86 @@
+"use client";
+
 import Link from 'next/link';
+import Image from 'next/image';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './About.module.css';
 
-export const metadata = {
-    title: "About Dr. Kotla | Psychiatrist",
-    description: "Learn about Dr. Rishitha Kotla's background, qualifications, and philosophy of care.",
-};
-
-const education = [
-    { year: 'MD', detail: 'Doctor of Medicine — University of Medicine' },
-    { year: 'Residency', detail: 'Psychiatry Residency Training' },
-    { year: 'Board Cert.', detail: 'Board Certified in Psychiatry & Neurology' },
-];
-
-const specializations = [
-    'Depression & Mood Disorders', 'Anxiety Disorders', 'PTSD & Trauma', 'OCD', 'ADHD',
-    'Bipolar Disorder', 'Sleep Disorders', 'Substance Use & Addiction', 'Personality Disorders',
-    'Psychotherapy', 'EMDR Therapy', 'Medication Management'
-];
-
-const memberships = [
-    'Indian Psychiatric Society (IPS)',
-    'Indian Medical Association (IMA)',
-    'Telangana State Medical Council',
-];
-
-const philosophy = [
-    { icon: '🎯', title: 'Patient-Centered', desc: 'Every treatment plan is tailored to your unique needs, goals, and preferences.' },
-    { icon: '🧪', title: 'Evidence-Based', desc: 'Treatment approaches grounded in the latest psychiatric research and clinical evidence.' },
-    { icon: '🌿', title: 'Holistic Care', desc: 'Addressing mental health as part of overall well-being — mind, body, and lifestyle.' },
-    { icon: '🤝', title: 'Collaborative', desc: 'Working together as partners in your healing journey, with open communication at every step.' },
-];
-
 export default function About() {
+    const { t } = useLanguage();
+
+    const educationItems = [
+        { label: t('about.eduResidency'), detail: t('about.eduResidencyDetail') },
+        { label: t('about.eduMbbs'), detail: t('about.eduMbbsDetail') },
+    ];
+
+    const specializations = [
+        t('about.specDepression'), t('about.specAnxiety'), t('about.specPtsd'), t('about.specOcd'),
+        t('about.specAdhd'), t('about.specBipolar'), t('about.specSleep'), t('about.specSubstance'),
+        t('about.specPersonality'), t('about.specPsychotherapy'), t('about.specEmdr'), t('about.specMedication'),
+    ];
+
+    const memberships = [t('about.member1'), t('about.member2'), t('about.member3')];
+
+    const philosophy = [
+        { icon: '🎯', title: t('about.philIcon1Title'), desc: t('about.philIcon1Desc') },
+        { icon: '🧪', title: t('about.philIcon2Title'), desc: t('about.philIcon2Desc') },
+        { icon: '🌿', title: t('about.philIcon3Title'), desc: t('about.philIcon3Desc') },
+        { icon: '🤝', title: t('about.philIcon4Title'), desc: t('about.philIcon4Desc') },
+    ];
+
     return (
         <div className="container mt-lg mb-lg">
             <header className={styles.pageHeader}>
-                <span className="eyebrow">About</span>
-                <h1>Meet <span className="gradient-text">Dr. Rishitha Kotla</span></h1>
-                <p>Board-certified psychiatrist dedicated to holistic, evidence-based mental health care.</p>
+                <span className="eyebrow">{t('about.eyebrow')}</span>
+                <h1>
+                    {t('about.headingPart1')} <span className="gradient-text">{t('about.headingPart2')}</span>
+                </h1>
+                <p>{t('about.headingSub')}</p>
             </header>
 
-            {/* Hero intro */}
             <div className={`glass-panel ${styles.introPanel}`}>
                 <div className={styles.contentWrapper}>
                     <div className={styles.photo}>
                         <div className={styles.photoInner}>
-                            <span className={styles.photoEmoji}>👩‍⚕️</span>
+                            <Image
+                                src="/dr-rishitha-kotla.jpeg"
+                                alt="Dr. Rishitha Kotla"
+                                fill
+                                sizes="(max-width: 900px) 280px, 320px"
+                                className={styles.photoImage}
+                                priority
+                            />
                         </div>
                         <div className={styles.photoRing} aria-hidden="true"></div>
-                        <div className={styles.floatingStat} style={{ top: '12%', right: '-6%' }}>
-                            <strong>15+</strong>
-                            <span>years</span>
-                        </div>
-                        <div className={styles.floatingStat} style={{ bottom: '14%', left: '-8%' }}>
-                            <strong>3</strong>
-                            <span>languages</span>
-                        </div>
                     </div>
 
                     <div className={styles.textContent}>
-                        <h2>Compassionate care, clinical excellence</h2>
-                        <p>
-                            Dr. Rishitha Kotla is a board-certified psychiatrist dedicated to providing holistic,
-                            evidence-based mental health care. With a deep commitment to understanding each patient&apos;s
-                            unique story, Dr. Kotla combines clinical expertise with genuine empathy to create
-                            personalized treatment plans that promote lasting wellness.
-                        </p>
+                        <h2>{t('about.introTitle')}</h2>
+                        <p>{t('about.introBody')}</p>
                         <blockquote className={styles.blockquote}>
                             <span className={styles.quoteMark} aria-hidden="true">&ldquo;</span>
-                            My philosophy is rooted in the belief that mental health care should be collaborative.
-                            I combine the latest evidence-based treatments with a warm, empathetic approach to help
-                            you find your path to wellness.
+                            {t('about.philosophyQuote')}
                         </blockquote>
                         <div className={styles.actions}>
-                            <Link href="/contact" className="btn btn-primary">Book a Consultation</Link>
-                            <Link href="/services" className="btn btn-outline">View Services</Link>
+                            <Link href="/contact" className="btn btn-primary">{t('about.bookConsultation')}</Link>
+                            <Link href="/services" className="btn btn-outline">{t('about.viewServices')}</Link>
                         </div>
                     </div>
                 </div>
             </div>
 
-            {/* Education */}
             <section className={styles.detailSection}>
                 <div className="glass-panel" style={{ padding: '2.5rem' }}>
                     <div className={styles.sectionTop}>
-                        <span className="eyebrow">Credentials</span>
-                        <h3>Education & training</h3>
+                        <span className="eyebrow">{t('about.credentials')}</span>
+                        <h3>{t('about.educationHeading')}</h3>
                     </div>
                     <div className={styles.timeline}>
-                        {education.map((item, i) => (
+                        {educationItems.map((item, i) => (
                             <div key={i} className={styles.timelineItem}>
                                 <div className={styles.timelineMarker}>{i + 1}</div>
                                 <div className={styles.timelineContent}>
-                                    <strong>{item.year}</strong>
+                                    <strong>{item.label}</strong>
                                     <p>{item.detail}</p>
                                 </div>
                             </div>
@@ -101,12 +89,11 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Specializations */}
             <section className={styles.detailSection}>
                 <div className="glass-panel" style={{ padding: '2.5rem', textAlign: 'center' }}>
                     <div className={styles.sectionTop} style={{ textAlign: 'center' }}>
-                        <span className="eyebrow">Focus areas</span>
-                        <h3>Areas of specialization</h3>
+                        <span className="eyebrow">{t('about.focusAreas')}</span>
+                        <h3>{t('about.specializationHeading')}</h3>
                     </div>
                     <div className={styles.chipCloud}>
                         {specializations.map((spec, i) => (
@@ -116,12 +103,11 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Philosophy */}
             <section className={styles.detailSection}>
                 <div className="glass-panel" style={{ padding: '2.5rem' }}>
                     <div className={styles.sectionTop} style={{ textAlign: 'center' }}>
-                        <span className="eyebrow">How we work</span>
-                        <h3>Treatment philosophy</h3>
+                        <span className="eyebrow">{t('about.howWeWork')}</span>
+                        <h3>{t('about.philosophyHeading')}</h3>
                     </div>
                     <div className={styles.philosophyGrid}>
                         {philosophy.map((item, i) => (
@@ -135,12 +121,11 @@ export default function About() {
                 </div>
             </section>
 
-            {/* Memberships + languages */}
             <section className={styles.detailSection}>
                 <div className={styles.splitRow}>
                     <div className="glass-panel" style={{ padding: '2rem' }}>
-                        <span className="eyebrow">Memberships</span>
-                        <h3 style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>Professional affiliations</h3>
+                        <span className="eyebrow">{t('about.memberships')}</span>
+                        <h3 style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>{t('about.affiliations')}</h3>
                         <ul className={styles.memberList}>
                             {memberships.map((m, i) => (
                                 <li key={i}>
@@ -151,24 +136,23 @@ export default function About() {
                         </ul>
                     </div>
                     <div className="glass-panel" style={{ padding: '2rem' }}>
-                        <span className="eyebrow">Languages</span>
-                        <h3 style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>Speak with you in</h3>
+                        <span className="eyebrow">{t('about.languages')}</span>
+                        <h3 style={{ marginTop: '0.75rem', marginBottom: '1rem' }}>{t('about.speakWith')}</h3>
                         <div className={styles.langList}>
-                            <span className={styles.lang}>🇬🇧 English</span>
-                            <span className={styles.lang}>🇮🇳 Hindi</span>
-                            <span className={styles.lang}>🇮🇳 Telugu</span>
+                            <span className={styles.lang}>🇬🇧 {t('about.langEnglish')}</span>
+                            <span className={styles.lang}>🇮🇳 {t('about.langHindi')}</span>
+                            <span className={styles.lang}>🇮🇳 {t('about.langTelugu')}</span>
                         </div>
                     </div>
                 </div>
             </section>
 
-            {/* CTA */}
             <section className={`glass-panel ${styles.ctaPanel}`}>
-                <h3>Ready to begin?</h3>
-                <p>Take the first step toward feeling better — we&rsquo;ll walk with you the rest of the way.</p>
+                <h3>{t('about.ctaTitle')}</h3>
+                <p>{t('about.ctaBody')}</p>
                 <div className={styles.actions} style={{ justifyContent: 'center' }}>
-                    <Link href="/contact" className="btn btn-primary btn-lg">Schedule a Visit</Link>
-                    <Link href="/tools" className="btn btn-outline btn-lg">Try Self-Help Tools</Link>
+                    <Link href="/contact" className="btn btn-primary btn-lg">{t('about.scheduleVisit')}</Link>
+                    <Link href="/tools" className="btn btn-outline btn-lg">{t('about.tryTools')}</Link>
                 </div>
             </section>
         </div>

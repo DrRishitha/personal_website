@@ -51,7 +51,14 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 30% 20%, hsla(255, 100%, 100%, 0.25), transparent 55%);
+    background: radial-gradient(circle at 30% 20%, hsla(255, 100%, 100%, 0.18), transparent 55%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.photoImage {
+    object-fit: cover;
+    object-position: center 65%;
 }
 
 .photoEmoji {
@@ -179,6 +186,13 @@
     border-radius: var(--radius-md);
     border: 1px solid var(--color-border);
     transition: transform var(--transition-fast), border-color var(--transition-fast);
+    min-width: 0;
+}
+
+.timelineContent {
+    min-width: 0;
+    flex: 1;
+    overflow-wrap: anywhere;
 }
 
 .timelineItem:hover {
@@ -208,11 +222,13 @@
     letter-spacing: 0.1em;
     text-transform: uppercase;
     margin-bottom: 0.2rem;
+    overflow-wrap: anywhere;
 }
 
 .timelineContent p {
     margin: 0;
     color: var(--color-text-main);
+    overflow-wrap: anywhere;
 }
 
 /* Chips */

@@ -1,56 +1,36 @@
+"use client";
+
 import Link from 'next/link';
-import { therapyModalities } from '@/data/therapyModalities';
-import { medicationCategories, medicationDisclaimer } from '@/data/medications';
+import { therapyModalitiesByLang, deaddictionMethodsByLang } from '@/data/practice.localized';
+import { medicationCategoriesByLang, medicationDisclaimerByLang } from '@/data/clinical.localized';
 import MedicationAccordion from '@/components/MedicationAccordion';
 import DeaddictionCarousel from '@/components/deaddiction/DeaddictionCarousel';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './Services.module.css';
 
-export const metadata = {
-    title: "Services | Dr. Kotla",
-    description: "Comprehensive psychiatric services including therapy, medication management, and consultations.",
-};
-
-const services = [
-    {
-        title: "Psychiatric Evaluation",
-        description: "A comprehensive 60–90 minute initial assessment to understand your history, symptoms, and goals. We work together to form a diagnosis and treatment plan.",
-        price: "Inquire for rates",
-        duration: "60–90 min",
-        icon: "🩺",
-    },
-    {
-        title: "Medication Management",
-        description: "Ongoing 30-minute follow-ups to monitor progress, adjust medications if needed, and ensure you are feeling your best.",
-        price: "Inquire for rates",
-        duration: "30 min",
-        icon: "💊",
-    },
-    {
-        title: "Psychotherapy",
-        description: "Individual therapy incorporating CBT, ACT, and psychodynamic approaches to address anxiety, depression, and trauma.",
-        price: "Inquire for rates",
-        duration: "50 min",
-        icon: "🗣️",
-    },
-    {
-        title: "Second Opinion Consultations",
-        description: "Expert review of your current diagnosis and treatment plan to provide clarity and new perspectives.",
-        price: "Inquire for rates",
-        duration: "45 min",
-        icon: "🔍",
-    },
-];
-
 export default function Services() {
+    const { t, lang } = useLanguage();
+
+    const therapyModalities = therapyModalitiesByLang[lang] || therapyModalitiesByLang.en;
+    const deaddictionMethods = deaddictionMethodsByLang[lang] || deaddictionMethodsByLang.en;
+    const medicationCategories = medicationCategoriesByLang[lang] || medicationCategoriesByLang.en;
+    const medicationDisclaimer = medicationDisclaimerByLang[lang] || medicationDisclaimerByLang.en;
+
+    const services = [
+        { title: t('services.svc1Title'), description: t('services.svc1Desc'), duration: t('services.svc1Duration'), icon: '🩺' },
+        { title: t('services.svc2Title'), description: t('services.svc2Desc'), duration: t('services.svc2Duration'), icon: '💊' },
+        { title: t('services.svc3Title'), description: t('services.svc3Desc'), duration: t('services.svc3Duration'), icon: '🗣️' },
+        { title: t('services.svc4Title'), description: t('services.svc4Desc'), duration: t('services.svc4Duration'), icon: '🔍' },
+    ];
+
     return (
         <div className="container mt-lg mb-lg">
             <header className={styles.pageHeader}>
-                <span className="eyebrow">Services</span>
-                <h1>Personalized psychiatric care</h1>
-                <p>Comprehensive treatment plans tailored to what you need — evidence-based, collaborative, and judgment-free.</p>
+                <span className="eyebrow">{t('services.eyebrow')}</span>
+                <h1>{t('services.heading')}</h1>
+                <p>{t('services.subheading')}</p>
             </header>
 
-            {/* Core services */}
             <section className={styles.servicesGrid}>
                 {services.map((service, idx) => (
                     <article key={idx} className={`glass-panel ${styles.serviceCard}`}>
@@ -61,11 +41,11 @@ export default function Services() {
                         <h3>{service.title}</h3>
                         <p>{service.description}</p>
                         <div className={styles.serviceFooter}>
-                            <span className={styles.servicePrice}>{service.price}</span>
+                            <span className={styles.servicePrice}>{t('services.priceLabel')}</span>
                             <Link href="/contact" className={styles.serviceLink}>
-                                Book
+                                {t('services.bookCta')}
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                    <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                 </svg>
                             </Link>
                         </div>
@@ -73,12 +53,11 @@ export default function Services() {
                 ))}
             </section>
 
-            {/* Therapy Modalities */}
             <section className={styles.subSection}>
                 <div className={styles.subHeader}>
-                    <span className="eyebrow">Modalities</span>
-                    <h2>Therapy approaches we offer</h2>
-                    <p>Evidence-based approaches matched to your goals and comfort.</p>
+                    <span className="eyebrow">{t('services.modalitiesEyebrow')}</span>
+                    <h2>{t('services.modalitiesHeading')}</h2>
+                    <p>{t('services.modalitiesSub')}</p>
                 </div>
                 <div className={styles.modalityGrid}>
                     {therapyModalities.map(modality => (
@@ -93,9 +72,9 @@ export default function Services() {
                             </div>
                             {modality.id === 'emdr' && (
                                 <Link href="/emdr" className={styles.modalityLink}>
-                                    Try Virtual EMDR
+                                    {t('services.tryEmdr')}
                                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                                        <path d="M5 12H19M19 12L13 6M19 12L13 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                                     </svg>
                                 </Link>
                             )}
@@ -104,12 +83,11 @@ export default function Services() {
                 </div>
             </section>
 
-            {/* Medication guide */}
             <section className={styles.subSection} style={{ maxWidth: '940px', margin: '0 auto 4rem' }}>
                 <div className={styles.subHeader}>
-                    <span className="eyebrow">Medication guide</span>
-                    <h2>Understanding common psychiatric medications</h2>
-                    <p>An educational reference — always speak with a psychiatrist before starting or changing medication.</p>
+                    <span className="eyebrow">{t('services.medGuideEyebrow')}</span>
+                    <h2>{t('services.medGuideHeading')}</h2>
+                    <p>{t('services.medGuideSub')}</p>
                 </div>
 
                 <div className={styles.disclaimerBox}>
@@ -120,21 +98,19 @@ export default function Services() {
                 <MedicationAccordion categories={medicationCategories} />
             </section>
 
-            {/* Deaddiction */}
             <section className={styles.subSection}>
                 <div className={styles.subHeader}>
-                    <span className="eyebrow">Recovery</span>
-                    <h2>Deaddiction approaches</h2>
-                    <p>Evidence-based methods for recovery from substance dependence.</p>
+                    <span className="eyebrow">{t('services.recoveryEyebrow')}</span>
+                    <h2>{t('services.recoveryHeading')}</h2>
+                    <p>{t('services.recoverySub')}</p>
                 </div>
-                <DeaddictionCarousel />
+                <DeaddictionCarousel methods={deaddictionMethods} />
             </section>
 
-            {/* CTA */}
             <section className={`glass-panel ${styles.ctaPanel}`}>
-                <h3>Not sure what you need?</h3>
-                <p>A short conversation can help you figure out the right next step — no commitment required.</p>
-                <Link href="/contact" className="btn btn-primary btn-lg">Get in touch</Link>
+                <h3>{t('services.ctaTitle')}</h3>
+                <p>{t('services.ctaBody')}</p>
+                <Link href="/contact" className="btn btn-primary btn-lg">{t('services.ctaButton')}</Link>
             </section>
         </div>
     );

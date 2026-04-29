@@ -1,13 +1,18 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { emdrPhases, audioConfig } from '@/data/emdrConfig';
+import { emdrPhasesByLang } from '@/data/clinical.localized';
+import { audioConfig } from '@/data/emdrConfig';
 import EMDRDot from './EMDRDot';
 import EMDRControls from './EMDRControls';
 import { useEMDRAudio } from './EMDRAudio';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './EMDRSession.module.css';
 
 export default function EMDRSession() {
+    const { t, lang } = useLanguage();
+    const emdrPhases = emdrPhasesByLang[lang] || emdrPhasesByLang.en;
+
     const [phaseIndex, setPhaseIndex] = useState(0);
     const [isActive, setIsActive] = useState(false);
     const [elapsed, setElapsed] = useState(0);
@@ -22,7 +27,6 @@ export default function EMDRSession() {
     const currentPhase = emdrPhases[phaseIndex];
     const { init: initAudio, playBeep } = useEMDRAudio(volume, audioConfig.frequency);
 
-    // Timer for active phases
     useEffect(() => {
         if (!isActive || !currentPhase.duration) return;
 
@@ -39,7 +43,6 @@ export default function EMDRSession() {
         return () => clearInterval(timerRef.current);
     }, [isActive, currentPhase]);
 
-    // Auto-advance instructions for preparation/closure phases
     useEffect(() => {
         if (!isActive || currentPhase.id === 'desensitization' || currentPhase.id === 'intro') return;
         if (!currentPhase.instructions) return;
@@ -55,14 +58,13 @@ export default function EMDRSession() {
         return () => clearInterval(instrTimer);
     }, [isActive, currentPhase]);
 
-    // Bilateral audio beeps during desensitization
     useEffect(() => {
         if (!isActive || currentPhase.id !== 'desensitization' || !audioEnabled) {
             clearInterval(audioTimerRef.current);
             return;
         }
 
-        const beepInterval = (1 / speed) * 500; // beep at each side
+        const beepInterval = (1 / speed) * 500;
         let isLeft = true;
 
         audioTimerRef.current = setInterval(() => {
@@ -107,7 +109,6 @@ export default function EMDRSession() {
 
     return (
         <div className={styles.session}>
-            {/* Phase Progress */}
             <div className={styles.phaseProgress}>
                 {emdrPhases.map((phase, i) => (
                     <div
@@ -120,28 +121,25 @@ export default function EMDRSession() {
                 ))}
             </div>
 
-            {/* Phase Content */}
             <div className={styles.content}>
                 <h2 className={styles.phaseName}>{currentPhase.name}</h2>
 
-                {/* Intro Phase */}
                 {currentPhase.id === 'intro' && (
                     <div className={styles.introContent}>
                         {currentPhase.instructions.map((inst, i) => (
                             <p key={i} className={styles.instruction}>{inst}</p>
                         ))}
                         <button onClick={nextPhase} className="btn btn-primary" style={{ marginTop: '2rem', width: '100%' }}>
-                            Begin Session
+                            {t('emdrSession.beginSession')}
                         </button>
                     </div>
                 )}
 
-                {/* Preparation & Closure Phases */}
                 {(currentPhase.id === 'preparation' || currentPhase.id === 'closure' || currentPhase.id === 'installation') && (
                     <div className={styles.guidedContent}>
                         {!isActive && !phaseComplete && (
                             <button onClick={startPhase} className="btn btn-primary" style={{ marginBottom: '2rem' }}>
-                                Start {currentPhase.name}
+                                {t('emdrSession.start').replace('{{phase}}', currentPhase.name)}
                             </button>
                         )}
 
@@ -162,17 +160,17 @@ export default function EMDRSession() {
 
                         {phaseComplete && (
                             <div className={styles.phaseCompleteMsg}>
-                                <p>Phase complete.</p>
+                                <p>{t('emdrSession.phaseComplete')}</p>
                                 {!isLastPhase ? (
                                     <button onClick={nextPhase} className="btn btn-primary">
-                                        Continue to {emdrPhases[phaseIndex + 1]?.name}
+                                        {t('emdrSession.continueTo').replace('{{phase}}', emdrPhases[phaseIndex + 1]?.name || '')}
                                     </button>
                                 ) : (
                                     <div>
                                         <p style={{ marginBottom: '1rem', color: 'var(--color-text-muted)' }}>
-                                            The session is now complete. Take a moment to notice how you feel. It is normal to continue processing after the session.
+                                            {t('emdrSession.sessionDone')}
                                         </p>
-                                        <button onClick={resetSession} className="btn btn-primary">Start New Session</button>
+                                        <button onClick={resetSession} className="btn btn-primary">{t('emdrSession.startNew')}</button>
                                     </div>
                                 )}
                             </div>
@@ -180,7 +178,6 @@ export default function EMDRSession() {
                     </div>
                 )}
 
-                {/* Desensitization Phase */}
                 {currentPhase.id === 'desensitization' && (
                     <div className={styles.desensitizationContent}>
                         {currentPhase.instructions && (
@@ -193,7 +190,7 @@ export default function EMDRSession() {
 
                         {!isActive && !phaseComplete && (
                             <button onClick={startPhase} className="btn btn-primary" style={{ marginBottom: '1.5rem', width: '100%' }}>
-                                Start Eye Movement
+                                {t('emdrSession.startEyeMovement')}
                             </button>
                         )}
 
@@ -201,7 +198,7 @@ export default function EMDRSession() {
 
                         {isActive && (
                             <p className={styles.timer} style={{ marginTop: '1rem' }}>
-                                {formatTime(currentPhase.duration - elapsed)} remaining
+                                {t('emdrSession.timeRemaining').replace('{{time}}', formatTime(currentPhase.duration - elapsed))}
                             </p>
                         )}
 
@@ -220,9 +217,9 @@ export default function EMDRSession() {
 
                         {phaseComplete && (
                             <div className={styles.phaseCompleteMsg}>
-                                <p>Desensitization phase complete.</p>
+                                <p>{t('emdrSession.desensComplete')}</p>
                                 <button onClick={nextPhase} className="btn btn-primary">
-                                    Continue to {emdrPhases[phaseIndex + 1]?.name}
+                                    {t('emdrSession.continueTo').replace('{{phase}}', emdrPhases[phaseIndex + 1]?.name || '')}
                                 </button>
                             </div>
                         )}
@@ -230,10 +227,9 @@ export default function EMDRSession() {
                 )}
             </div>
 
-            {/* Reset */}
             {phaseIndex > 0 && (
                 <button onClick={resetSession} className={styles.resetBtn}>
-                    Reset Session
+                    {t('emdrSession.resetSession')}
                 </button>
             )}
         </div>

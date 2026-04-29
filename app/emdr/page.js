@@ -2,15 +2,18 @@
 
 import Link from 'next/link';
 import EMDRSession from '@/components/emdr/EMDRSession';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 
 export default function EMDRPage() {
+    const { t } = useLanguage();
+
     return (
         <div className="container mt-lg mb-lg">
             <header className="text-center" style={{ marginBottom: '2rem', maxWidth: '720px', margin: '0 auto 2.5rem' }}>
-                <span className="eyebrow">Trauma processing tool</span>
-                <h1>Virtual <span className="gradient-text">EMDR</span> Session</h1>
+                <span className="eyebrow">{t('emdr.eyebrow')}</span>
+                <h1>{t('emdr.headingPart1')} <span className="gradient-text">{t('emdr.headingPart2')}</span> {t('emdr.headingSuffix')}</h1>
                 <p style={{ color: 'var(--color-text-muted)', fontSize: '1.05rem', marginTop: '1rem' }}>
-                    Eye Movement Desensitization and Reprocessing — a guided practice tool for bilateral stimulation.
+                    {t('emdr.subheading')}
                 </p>
             </header>
 
@@ -30,9 +33,7 @@ export default function EMDRPage() {
             >
                 <span style={{ fontSize: '1.1rem', flexShrink: 0 }}>⚠️</span>
                 <p style={{ fontSize: '0.9rem', color: 'var(--color-text-main)', fontWeight: 500, margin: 0, maxWidth: 'none', lineHeight: 1.5 }}>
-                    This virtual EMDR tool is for supplementary practice only and is not a substitute for
-                    professional EMDR therapy conducted by a trained therapist. If you are working through trauma,
-                    please do so under the guidance of a qualified mental health professional.
+                    {t('emdr.warning')}
                 </p>
             </div>
 
@@ -48,11 +49,11 @@ export default function EMDRPage() {
                 maxWidth: '620px',
                 marginInline: 'auto',
             }}>
-                <h3 style={{ marginBottom: '0.5rem' }}>Want professional EMDR therapy?</h3>
+                <h3 style={{ marginBottom: '0.5rem' }}>{t('emdr.proHeading')}</h3>
                 <p style={{ color: 'var(--color-text-muted)', marginBottom: '1.25rem' }}>
-                    Dr. Kotla provides full guided EMDR sessions with clinical expertise.
+                    {t('emdr.proBody')}
                 </p>
-                <Link href="/contact" className="btn btn-primary">Book a session</Link>
+                <Link href="/contact" className="btn btn-primary">{t('emdr.bookSession')}</Link>
             </div>
         </div>
     );

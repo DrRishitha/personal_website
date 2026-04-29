@@ -1,59 +1,106 @@
-.marqueeSection {
-    padding: 2rem 0;
-    background: hsla(205, 50%, 25%, 0.03);
+.section {
+    padding: 4rem 0 3.5rem;
+    background:
+        radial-gradient(circle at 80% 20%, hsla(168, 70%, 75%, 0.12), transparent 55%),
+        radial-gradient(circle at 15% 80%, hsla(210, 80%, 75%, 0.12), transparent 55%),
+        hsla(205, 50%, 25%, 0.02);
     border-top: 1px solid hsla(205, 50%, 25%, 0.06);
     border-bottom: 1px solid hsla(205, 50%, 25%, 0.06);
     overflow: hidden;
 }
 
-.marqueeWrapper {
-    position: relative;
-    mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-    -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-}
-
-.marqueeTrack {
+.container {
     display: flex;
-    width: max-content;
-    animation: scroll 120s linear infinite;
-}
-
-.marqueeTrack:hover {
-    animation-play-state: paused;
-}
-
-.quoteItem {
-    display: inline-flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.3rem;
-    padding: 0 3rem;
-    white-space: nowrap;
-    font-size: 0.95rem;
-    color: var(--color-text-muted);
+    text-align: center;
+    max-width: 780px;
 }
 
-.quoteItem em {
+.eyebrow {
+    display: inline-block;
+    padding: 0.35rem 0.95rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    margin-bottom: 1.5rem;
+}
+
+.figure {
+    position: relative;
+    margin: 0;
+    padding: 0 1rem;
+    min-height: 9rem;
+    transition: opacity 0.45s var(--ease-out), transform 0.45s var(--ease-out);
+}
+
+.fadeIn {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.fadeOut {
+    opacity: 0;
+    transform: translateY(-6px);
+}
+
+.openMark {
+    position: absolute;
+    top: -1.6rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: var(--font-heading);
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-accent);
+    opacity: 0.35;
+    pointer-events: none;
+}
+
+.quote {
+    margin: 0 0 1.1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.25rem, 2.4vw, 1.7rem);
+    line-height: 1.45;
     font-style: italic;
+    color: var(--color-text-main);
+    letter-spacing: -0.005em;
 }
 
-.quoteItem strong {
+.author {
+    font-size: 0.92rem;
     color: var(--color-primary);
     font-weight: 600;
-    font-size: 0.85rem;
+    letter-spacing: 0.02em;
 }
 
-@keyframes scroll {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+.dots {
+    display: flex;
+    gap: 0.4rem;
+    margin-top: 1.5rem;
 }
 
-@media (max-width: 768px) {
-    .quoteItem {
-        font-size: 0.85rem;
-        padding: 0 2rem;
-    }
+.dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: hsla(210, 30%, 50%, 0.2);
+    transition: background var(--transition-fast), transform var(--transition-fast);
+}
+
+.dotActive {
+    background: var(--color-accent);
+    transform: scale(1.2);
+}
+
+@media (max-width: 600px) {
+    .section { padding: 3rem 0 2.5rem; }
+    .figure { min-height: 11rem; }
+    .quote { font-size: 1.1rem; }
 }

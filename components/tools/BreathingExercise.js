@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './BreathingExercise.module.css';
 
 export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, title }) {
-    const [phase, setPhase] = useState('ready'); // ready | inhale | hold | exhale | paused
+    const { t } = useLanguage();
+    const [phase, setPhase] = useState('ready');
     const [cycles, setCycles] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const tickRef = useRef(null);
@@ -54,11 +56,11 @@ export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, ti
 
     const getText = () => {
         switch (phase) {
-            case 'ready': return 'Ready when you are';
-            case 'inhale': return 'Breathe in';
-            case 'hold': return 'Hold';
-            case 'exhale': return 'Breathe out';
-            case 'paused': return 'Paused';
+            case 'ready': return t('breathing.ready');
+            case 'inhale': return t('breathing.inhale');
+            case 'hold': return t('breathing.hold');
+            case 'exhale': return t('breathing.exhale');
+            case 'paused': return t('breathing.paused');
             default: return '';
         }
     };
@@ -88,12 +90,12 @@ export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, ti
         <div className={styles.wrapper}>
             {title && <h3 className={styles.title}>{title}</h3>}
             <p className={styles.pattern}>
-                Pattern&nbsp;·&nbsp;
-                <strong>{inhale}s</strong> inhale
+                {t('breathing.pattern')}&nbsp;·&nbsp;
+                <strong>{inhale}s</strong> {t('breathing.patternInhale')}
                 <span>·</span>
-                <strong>{hold}s</strong> hold
+                <strong>{hold}s</strong> {t('breathing.patternHold')}
                 <span>·</span>
-                <strong>{exhale}s</strong> exhale
+                <strong>{exhale}s</strong> {t('breathing.patternExhale')}
             </p>
 
             <div className={styles.stage}>
@@ -115,36 +117,34 @@ export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, ti
             <div className={styles.stats}>
                 <div>
                     <span className={styles.statValue}>{cycles}</span>
-                    <span className={styles.statLabel}>cycles</span>
+                    <span className={styles.statLabel}>{t('breathing.cycles')}</span>
                 </div>
                 <div>
                     <span className={styles.statValue}>
                         {totalMinutes}:{String(totalSeconds).padStart(2, '0')}
                     </span>
-                    <span className={styles.statLabel}>elapsed</span>
+                    <span className={styles.statLabel}>{t('breathing.elapsed')}</span>
                 </div>
             </div>
 
             <div className={styles.actions}>
                 {phase === 'ready' ? (
                     <button onClick={start} className="btn btn-primary btn-lg btn-block">
-                        ▶ Begin Session
+                        {t('breathing.begin')}
                     </button>
                 ) : (
                     <>
                         <button onClick={togglePause} className="btn btn-outline">
-                            {phase === 'paused' ? '▶ Resume' : '⏸ Pause'}
+                            {phase === 'paused' ? t('breathing.resume') : t('breathing.pause')}
                         </button>
                         <button onClick={stop} className="btn btn-ghost">
-                            Stop
+                            {t('breathing.stop')}
                         </button>
                     </>
                 )}
             </div>
 
-            <p className={styles.tip}>
-                Tip&nbsp;· Sit comfortably. Close your eyes if you like. Match your breath to the expanding circle.
-            </p>
+            <p className={styles.tip}>{t('breathing.tip')}</p>
         </div>
     );
 }

@@ -1,8 +1,13 @@
+"use client";
+
 import Link from 'next/link';
 import HelplineNumber from '@/components/shared/HelplineNumber';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './Footer.module.css';
 
 export default function Footer() {
+    const { t } = useLanguage();
+
     return (
         <footer className={styles.footer}>
             <div className={styles.helplineStrip}>
@@ -16,12 +21,10 @@ export default function Footer() {
                             <span className={styles.brandMark} aria-hidden="true">✦</span>
                             <span>
                                 <span className={styles.brandTitle}>Dr. Rishitha Kotla</span>
-                                <span className={styles.brandSub}>Board-certified Psychiatrist</span>
+                                <span className={styles.brandSub}>{t('footer.brandSub')}</span>
                             </span>
                         </Link>
-                        <p className={styles.brandDesc}>
-                            Evidence-based psychiatric care and free self-help tools for a balanced mind.
-                        </p>
+                        <p className={styles.brandDesc}>{t('footer.brandDesc')}</p>
                         <div className={styles.socials}>
                             <a href="mailto:dr.rishithakotla@gmail.com" className={styles.iconBtn} aria-label="Email">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2z M2 8l10 6 10-6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>
@@ -42,24 +45,24 @@ export default function Footer() {
                     </div>
 
                     <div>
-                        <h4 className={styles.colTitle}>Explore</h4>
+                        <h4 className={styles.colTitle}>{t('footer.exploreTitle')}</h4>
                         <nav className={styles.linkList} aria-label="Footer navigation">
-                            <Link href="/">Home</Link>
-                            <Link href="/about">About Dr. Kotla</Link>
-                            <Link href="/services">Services</Link>
-                            <Link href="/tools">Self-Help Tools</Link>
-                            <Link href="/disorders">Disorders</Link>
-                            <Link href="/emdr">Virtual EMDR</Link>
-                            <Link href="/contact">Contact</Link>
+                            <Link href="/">{t('footer.linkHome')}</Link>
+                            <Link href="/about">{t('footer.linkAbout')}</Link>
+                            <Link href="/services">{t('footer.linkServices')}</Link>
+                            <Link href="/tools">{t('footer.linkTools')}</Link>
+                            <Link href="/disorders">{t('footer.linkDisorders')}</Link>
+                            <Link href="/emdr">{t('footer.linkEmdr')}</Link>
+                            <Link href="/contact">{t('footer.linkContact')}</Link>
                         </nav>
                     </div>
 
                     <div>
-                        <h4 className={styles.colTitle}>Contact</h4>
+                        <h4 className={styles.colTitle}>{t('footer.contactTitle')}</h4>
                         <ul className={styles.contactList}>
                             <li>
                                 <span>📍</span>
-                                <span>Himayathnagar, Hyderabad</span>
+                                <span>{t('footer.location')}</span>
                             </li>
                             <li>
                                 <span>📞</span>
@@ -71,24 +74,24 @@ export default function Footer() {
                             </li>
                             <li>
                                 <span>🕐</span>
-                                <span>Mon – Fri · 9:00 AM – 5:00 PM</span>
+                                <span>{t('footer.workHours')}</span>
                             </li>
                         </ul>
                     </div>
 
                     <div>
-                        <h4 className={styles.colTitle}>In Crisis?</h4>
+                        <h4 className={styles.colTitle}>{t('footer.crisisTitle')}</h4>
                         <div className={styles.crisisCard}>
                             <p className={styles.crisisLine}>
-                                <span>Emergency</span>
+                                <span>{t('footer.emergency')}</span>
                                 <a href="tel:112">112</a>
                             </p>
                             <p className={styles.crisisLine}>
-                                <span>KIRAN 24/7</span>
+                                <span>{t('footer.kiranLabel')}</span>
                                 <a href="tel:18005990019">1800-599-0019</a>
                             </p>
                             <p className={styles.crisisLine}>
-                                <span>Vandrevala</span>
+                                <span>{t('footer.vandrevalaLabel')}</span>
                                 <a href="tel:18602662345">1860-2662-345</a>
                             </p>
                         </div>
@@ -96,10 +99,8 @@ export default function Footer() {
                 </div>
 
                 <div className={styles.bottomBar}>
-                    <p>&copy; {new Date().getFullYear()} Dr. Rishitha Kotla. All rights reserved.</p>
-                    <p className={styles.disclaimer}>
-                        For informational purposes only — not a substitute for professional medical advice.
-                    </p>
+                    <p>&copy; {new Date().getFullYear()} Dr. Rishitha Kotla. {t('footer.allRightsReserved')}</p>
+                    <p className={styles.disclaimer}>{t('footer.disclaimer')}</p>
                 </div>
             </div>
         </footer>

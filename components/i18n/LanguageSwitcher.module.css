@@ -1,0 +1,136 @@
+.wrapper {
+    position: relative;
+    display: inline-flex;
+}
+
+.trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--color-primary);
+    background: var(--color-surface-glass);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-pill);
+    cursor: pointer;
+    transition: background var(--transition-fast), border-color var(--transition-fast);
+}
+
+.trigger:hover {
+    background: hsla(210, 65%, 28%, 0.08);
+    border-color: var(--color-border-strong);
+}
+
+.code {
+    font-family: var(--font-heading);
+    letter-spacing: 0.02em;
+}
+
+.native {
+    font-weight: 500;
+    color: var(--color-text-muted);
+    font-size: 0.78rem;
+}
+
+.caret {
+    transition: transform var(--transition-fast);
+}
+
+.caretOpen {
+    transform: rotate(180deg);
+}
+
+.menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 180px;
+    list-style: none;
+    margin: 0;
+    padding: 0.4rem;
+    background: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-lg);
+    z-index: 200;
+    animation: menuIn 0.18s var(--ease-out);
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    font-size: 0.9rem;
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm, 6px);
+    color: var(--color-text-main);
+    text-align: left;
+    cursor: pointer;
+    transition: background var(--transition-fast);
+}
+
+.option:hover {
+    background: hsla(210, 65%, 28%, 0.06);
+}
+
+.optionActive {
+    background: hsla(210, 65%, 28%, 0.1);
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.optionNative {
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+    flex-shrink: 0;
+}
+
+.optionLabel {
+    color: var(--color-text-muted);
+    font-size: 0.82rem;
+    margin-left: auto;
+}
+
+.optionActive .optionLabel {
+    color: var(--color-primary);
+}
+
+.check {
+    color: var(--color-accent);
+    flex-shrink: 0;
+    margin-left: 0.25rem;
+}
+
+.wrapperMobile .trigger {
+    padding: 0.6rem 1rem;
+    font-size: 0.95rem;
+}
+
+.wrapperMobile .menu {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+@keyframes menuIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 480px) {
+    .native {
+        display: none;
+    }
+}

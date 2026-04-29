@@ -2,18 +2,22 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { disorders } from '@/data/disorders';
+import { disordersByLang } from '@/data/disordersFaqs.localized';
 import DisorderCard from '@/components/disorders/DisorderCard';
+import { useLanguage } from '@/components/i18n/LanguageProvider';
 import styles from './Disorders.module.css';
 
 const UNLOCK_KEY = 'disorders_unlocked';
 const VALID_CODES = ['mindwell2024', 'drrishitha'];
 
 export default function DisordersPage() {
+    const { t, lang } = useLanguage();
     const [isUnlocked, setIsUnlocked] = useState(false);
     const [showCodeInput, setShowCodeInput] = useState(false);
     const [code, setCode] = useState('');
     const [error, setError] = useState('');
+
+    const disorders = disordersByLang[lang] || disordersByLang.en;
 
     useEffect(() => {
         const unlocked = localStorage.getItem(UNLOCK_KEY);
@@ -27,7 +31,7 @@ export default function DisordersPage() {
             setShowCodeInput(false);
             setError('');
         } else {
-            setError('Invalid code. Please get the code from Dr. Kotla during your consultation.');
+            setError(t('disorders.invalidCode'));
         }
     };
 
@@ -39,9 +43,9 @@ export default function DisordersPage() {
     return (
         <div className="container mt-lg mb-lg">
             <header className={styles.pageHeader}>
-                <span className="eyebrow">Educational resource</span>
-                <h1>Understanding <span className="gradient-text">mental health disorders</span></h1>
-                <p>Learning about a condition is often the first step toward healing. This library covers common disorders with symptoms, treatments, and guidance on when to seek help.</p>
+                <span className="eyebrow">{t('disorders.eyebrow')}</span>
+                <h1>{t('disorders.headingPart1')} <span className="gradient-text">{t('disorders.headingPart2')}</span></h1>
+                <p>{t('disorders.subheading')}</p>
 
                 <div className={styles.statusRow}>
                     {!isUnlocked ? (
@@ -50,7 +54,7 @@ export default function DisordersPage() {
                                 onClick={() => setShowCodeInput(true)}
                                 className="btn btn-outline"
                             >
-                                🔓 Unlock full content
+                                {t('disorders.unlockBtn')}
                             </button>
                         ) : (
                             <div className={styles.codeInputRow}>
@@ -58,32 +62,30 @@ export default function DisordersPage() {
                                     type="text"
                                     value={code}
                                     onChange={(e) => { setCode(e.target.value); setError(''); }}
-                                    placeholder="Enter consultation code"
+                                    placeholder={t('disorders.codePlaceholder')}
                                     className="form-input"
-                                    style={{ width: '260px' }}
+                                    style={{ width: '260px', maxWidth: '100%' }}
                                     onKeyDown={(e) => e.key === 'Enter' && handleUnlock()}
                                     autoFocus
                                 />
-                                <button onClick={handleUnlock} className="btn btn-primary">Unlock</button>
+                                <button onClick={handleUnlock} className="btn btn-primary">{t('disorders.unlock')}</button>
                                 <button
                                     onClick={() => { setShowCodeInput(false); setError(''); setCode(''); }}
                                     className="btn btn-ghost"
                                 >
-                                    Cancel
+                                    {t('disorders.cancel')}
                                 </button>
                             </div>
                         )
                     ) : (
                         <div className={styles.unlockedBadge}>
-                            <span>✅ Content unlocked</span>
-                            <button onClick={relock} className={styles.relockLink}>Re-lock</button>
+                            <span>{t('disorders.unlocked')}</span>
+                            <button onClick={relock} className={styles.relockLink}>{t('disorders.relock')}</button>
                         </div>
                     )}
                     {error && <p className={styles.error}>{error}</p>}
                     {!isUnlocked && (
-                        <p className={styles.hint}>
-                            Detailed information is blurred until after your consultation with Dr. Kotla.
-                        </p>
+                        <p className={styles.hint}>{t('disorders.hint')}</p>
                     )}
                 </div>
             </header>
@@ -97,8 +99,8 @@ export default function DisordersPage() {
             </div>
 
             <div className={styles.footer}>
-                <p>This information is for educational purposes only and does not replace professional diagnosis.</p>
-                <Link href="/contact" className="btn btn-primary">Book a Consultation</Link>
+                <p>{t('disorders.disclaimer')}</p>
+                <Link href="/contact" className="btn btn-primary">{t('disorders.bookConsultation')}</Link>
             </div>
         </div>
     );
