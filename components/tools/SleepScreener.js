@@ -3,10 +3,15 @@
 import Screener from './Screener';
 import { isiByLang } from '@/data/clinical.localized';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
 
 export default function SleepScreener() {
     const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
     const data = isiByLang[lang] || isiByLang.en;
+
+    const toolAudio = manifest?.screeners?.isi?.[lang] ?? {};
+    const questionAudio = data.questions.map((_, i) => toolAudio[`q${i}`] ?? null);
 
     const getResult = (score) => {
         for (const level of data.interpretation) {
@@ -22,6 +27,7 @@ export default function SleepScreener() {
             options={data.options}
             hint={t('screener.sleepHint')}
             getResult={getResult}
+            questionAudio={questionAudio}
         />
     );
 }

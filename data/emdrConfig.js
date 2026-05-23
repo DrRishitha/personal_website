@@ -73,9 +73,9 @@ export const emdrPhases = [
 ];
 
 export const audioConfig = {
-  frequency: 480,
-  beepDuration: 150,
-  volume: 0.3
+  frequency: 440,
+  beepDuration: 450,
+  volume: 0.35
 };
 
 export const dotDirections = [

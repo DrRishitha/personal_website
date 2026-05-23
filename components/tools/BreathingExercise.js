@@ -2,14 +2,19 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
+import AudioKaraoke from '@/components/audio/AudioKaraoke';
 import styles from './BreathingExercise.module.css';
 
 export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, title }) {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
     const [phase, setPhase] = useState('ready');
     const [cycles, setCycles] = useState(0);
     const [seconds, setSeconds] = useState(0);
     const tickRef = useRef(null);
+
+    const breathingAudio = manifest?.breathing?.[lang] ?? {};
 
     useEffect(() => {
         if (phase === 'ready' || phase === 'paused') return;
@@ -83,6 +88,10 @@ export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, ti
         }
     };
 
+    // Phase audio entry — keyed so AudioKaraoke remounts (and auto-plays) on each phase change
+    const phaseAudioKey = ['inhale', 'hold', 'exhale'].includes(phase) ? phase : null;
+    const phaseAudio = phaseAudioKey ? (breathingAudio[phaseAudioKey] ?? null) : null;
+
     const totalMinutes = Math.floor(seconds / 60);
     const totalSeconds = seconds % 60;
 
@@ -113,6 +122,16 @@ export default function BreathingExercise({ inhale = 4, hold = 4, exhale = 4, ti
                     {getSubText() && <span className={styles.phaseTime}>{getSubText()}</span>}
                 </div>
             </div>
+
+            {/* Auto-play phase cue audio; key forces remount on phase change */}
+            {phaseAudio && phase !== 'paused' && (
+                <AudioKaraoke
+                    key={`${phase}-${cycles}`}
+                    entry={phaseAudio}
+                    autoPlay
+                    compact
+                />
+            )}
 
             <div className={styles.stats}>
                 <div>

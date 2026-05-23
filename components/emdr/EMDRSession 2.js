@@ -113,7 +113,6 @@ export default function EMDRSession() {
 
     const phaseComplete = currentPhase.duration ? elapsed >= currentPhase.duration : false;
     const isLastPhase = phaseIndex === emdrPhases.length - 1;
-    const nextPhaseName = emdrPhases[phaseIndex + 1]?.name || '';
 
     return (
         <div className={styles.session}>
@@ -184,16 +183,14 @@ export default function EMDRSession() {
                                 <p>{t('emdrSession.phaseComplete')}</p>
                                 {!isLastPhase ? (
                                     <button onClick={nextPhase} className="btn btn-primary">
-                                        {t('emdrSession.continueTo').replace('{{phase}}', nextPhaseName)}
+                                        {t('emdrSession.continueTo').replace('{{phase}}', emdrPhases[phaseIndex + 1]?.name || '')}
                                     </button>
                                 ) : (
                                     <div>
                                         <p style={{ marginBottom: '1rem', color: 'var(--color-text-muted)' }}>
                                             {t('emdrSession.sessionDone')}
                                         </p>
-                                        <button onClick={resetSession} className="btn btn-primary">
-                                            {t('emdrSession.startNew')}
-                                        </button>
+                                        <button onClick={resetSession} className="btn btn-primary">{t('emdrSession.startNew')}</button>
                                     </div>
                                 )}
                             </div>
@@ -247,7 +244,7 @@ export default function EMDRSession() {
                             <div className={styles.phaseCompleteMsg}>
                                 <p>{t('emdrSession.desensComplete')}</p>
                                 <button onClick={nextPhase} className="btn btn-primary">
-                                    {t('emdrSession.continueTo').replace('{{phase}}', nextPhaseName)}
+                                    {t('emdrSession.continueTo').replace('{{phase}}', emdrPhases[phaseIndex + 1]?.name || '')}
                                 </button>
                             </div>
                         )}

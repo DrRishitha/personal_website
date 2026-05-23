@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import AudioKaraoke from '@/components/audio/AudioKaraoke';
 import styles from './DepressionScreener.module.css';
 
 export default function Screener({
@@ -15,6 +16,8 @@ export default function Screener({
     disclaimer,
     preamble,
     negativeResult,
+    questionAudio,   // optional: array of { url, words, duration_ms } per question (may have nulls)
+    preambleAudio,   // optional: { url, words, duration_ms } for preamble
 }) {
     const { t } = useLanguage();
     const effectiveDisclaimer = disclaimer || t('screener.disclaimer');
@@ -57,6 +60,7 @@ export default function Screener({
         return (
             <div className={styles.container}>
                 <h3 className={styles.question} style={{ marginTop: '1rem', marginBottom: '2rem' }}>
+                    {preambleAudio && <AudioKaraoke entry={preambleAudio} compact />}
                     {preamble.prompt}
                 </h3>
                 <div className={styles.options}>
@@ -105,6 +109,9 @@ export default function Screener({
                 <h3 className={styles.question}>
                     <span className={styles.number}>{currentQuestion + 1}.</span>
                     {questions[currentQuestion]}
+                    {questionAudio?.[currentQuestion] && (
+                        <AudioKaraoke entry={questionAudio[currentQuestion]} compact />
+                    )}
                 </h3>
 
                 <div className={styles.options}>

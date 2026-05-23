@@ -2,9 +2,11 @@
 
 import Screener from './Screener';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
 
 export default function AnxietyScreener() {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
 
     const questions = [
         t('screener.anxQ1'), t('screener.anxQ2'), t('screener.anxQ3'),
@@ -18,6 +20,9 @@ export default function AnxietyScreener() {
         { label: t('screener.optMoreThanHalf'), value: 2 },
         { label: t('screener.optNearlyEvery'), value: 3 },
     ];
+
+    const toolAudio = manifest?.screeners?.gad7?.[lang] ?? {};
+    const questionAudio = questions.map((_, i) => toolAudio[`q${i}`] ?? null);
 
     const getResult = (score) => {
         if (score <= 4) return { level: t('screener.anxMinimal'), color: 'hsl(150, 55%, 45%)', description: t('screener.anxMinimalDesc') };
@@ -33,6 +38,7 @@ export default function AnxietyScreener() {
             options={options}
             hint={t('screener.anxietyHint')}
             getResult={getResult}
+            questionAudio={questionAudio}
         />
     );
 }

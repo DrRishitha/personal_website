@@ -1,0 +1,83 @@
+.wrapper {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  margin: 0.5rem 0;
+}
+
+/* Compact icon button (for screener questions) */
+.iconBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--color-text-subtle, #888);
+  flex-shrink: 0;
+  transition: background 0.15s, color 0.15s;
+  padding: 0;
+}
+
+.iconBtn:hover {
+  background: hsla(205, 60%, 50%, 0.1);
+  color: var(--color-primary, hsl(205, 60%, 45%));
+}
+
+.iconBtnActive {
+  background: hsla(205, 60%, 50%, 0.12);
+  color: var(--color-primary, hsl(205, 60%, 45%));
+}
+
+/* Full play button (for JPMR / EMDR) */
+.playBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border: 1.5px solid var(--color-primary, hsl(205, 60%, 45%));
+  border-radius: 50%;
+  background: transparent;
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--color-primary, hsl(205, 60%, 45%));
+  flex-shrink: 0;
+  transition: background 0.15s;
+  padding: 0;
+}
+
+.playBtn:hover {
+  background: hsla(205, 60%, 50%, 0.1);
+}
+
+.playBtnActive {
+  background: hsla(205, 60%, 50%, 0.15);
+}
+
+/* Karaoke text */
+.text {
+  flex: 1;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: var(--color-text, #1a1a2e);
+  margin: 0;
+  padding-top: 0.15rem;
+}
+
+.word {
+  display: inline;
+  border-radius: 3px;
+  transition: background 0.08s, color 0.08s;
+}
+
+.wordActive {
+  background: hsl(205, 80%, 88%);
+  color: hsl(205, 60%, 30%);
+  border-radius: 3px;
+  padding: 0 1px;
+}

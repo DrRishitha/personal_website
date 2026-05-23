@@ -2,9 +2,11 @@
 
 import Screener from './Screener';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
 
 export default function DepressionScreener() {
-    const { t } = useLanguage();
+    const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
 
     const questions = [
         t('screener.depQ1'), t('screener.depQ2'), t('screener.depQ3'),
@@ -18,6 +20,9 @@ export default function DepressionScreener() {
         { label: t('screener.optMoreThanHalf'), value: 2 },
         { label: t('screener.optNearlyEvery'), value: 3 },
     ];
+
+    const toolAudio = manifest?.screeners?.phq9?.[lang] ?? {};
+    const questionAudio = questions.map((_, i) => toolAudio[`q${i}`] ?? null);
 
     const getResult = (score) => {
         if (score <= 4) return { level: t('screener.depMinimal'), color: 'hsl(150, 55%, 45%)', description: t('screener.depMinimalDesc') };
@@ -34,6 +39,7 @@ export default function DepressionScreener() {
             options={options}
             hint={t('screener.depressionHint')}
             getResult={getResult}
+            questionAudio={questionAudio}
         />
     );
 }

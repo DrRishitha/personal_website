@@ -2,41 +2,53 @@
 
 import { useRef, useCallback, useEffect } from 'react';
 
-export function useEMDRAudio(volume = 0.3, frequency = 480) {
+export function useEMDRAudio(volume = 0.3, frequency = 440) {
     const audioCtxRef = useRef(null);
     const isInitialized = useRef(false);
 
     const init = useCallback(() => {
         if (isInitialized.current) return;
-        audioCtxRef.current = new (window.AudioContext || window.webkitAudioContext)();
+        const ctx = new (window.AudioContext || window.webkitAudioContext)();
+        audioCtxRef.current = ctx;
         isInitialized.current = true;
+        // Some browsers start AudioContext suspended even after a user gesture
+        if (ctx.state === 'suspended') ctx.resume().catch(() => {});
     }, []);
 
     const playBeep = useCallback((pan = 0) => {
         if (!audioCtxRef.current) return;
         const ctx = audioCtxRef.current;
-        if (ctx.state === 'suspended') ctx.resume();
 
-        const oscillator = ctx.createOscillator();
-        const gainNode = ctx.createGain();
-        const panner = ctx.createStereoPanner();
+        const scheduleBeep = () => {
+            const now = ctx.currentTime;
 
-        oscillator.type = 'sine';
-        oscillator.frequency.value = frequency;
-        panner.pan.value = pan; // -1 left, 1 right
-        gainNode.gain.value = volume;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            const panner = ctx.createStereoPanner();
 
-        oscillator.connect(panner);
-        panner.connect(gainNode);
-        gainNode.connect(ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.value = frequency;
 
-        // Fade in and out to avoid clicks
-        gainNode.gain.setValueAtTime(0, ctx.currentTime);
-        gainNode.gain.linearRampToValueAtTime(volume, ctx.currentTime + 0.02);
-        gainNode.gain.linearRampToValueAtTime(0, ctx.currentTime + 0.15);
+            osc.connect(gain);
+            gain.connect(panner);
+            panner.connect(ctx.destination);
 
-        oscillator.start(ctx.currentTime);
-        oscillator.stop(ctx.currentTime + 0.15);
+            panner.pan.value = pan;
+
+            // Bell-like envelope: instant attack, slow exponential decay
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(volume, now + 0.008);
+            gain.gain.exponentialRampToValueAtTime(0.001, now + 0.45);
+
+            osc.start(now);
+            osc.stop(now + 0.45);
+        };
+
+        if (ctx.state === 'suspended') {
+            ctx.resume().then(scheduleBeep).catch(() => {});
+        } else {
+            scheduleBeep();
+        }
     }, [volume, frequency]);
 
     useEffect(() => {

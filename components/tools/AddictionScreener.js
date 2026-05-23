@@ -3,10 +3,15 @@
 import Screener from './Screener';
 import { cageByLang } from '@/data/clinical.localized';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
 
 export default function AddictionScreener() {
     const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
     const data = cageByLang[lang] || cageByLang.en;
+
+    const toolAudio = manifest?.screeners?.cage?.[lang] ?? {};
+    const questionAudio = data.questions.map((_, i) => toolAudio[`q${i}`] ?? null);
 
     const getResult = (score) => {
         for (const level of data.interpretation) {
@@ -21,6 +26,7 @@ export default function AddictionScreener() {
             questions={data.questions}
             options={data.options}
             getResult={getResult}
+            questionAudio={questionAudio}
         />
     );
 }

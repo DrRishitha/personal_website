@@ -3,10 +3,15 @@
 import Screener from './Screener';
 import { pss10ByLang } from '@/data/clinical.localized';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
 
 export default function StressScreener() {
     const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
     const data = pss10ByLang[lang] || pss10ByLang.en;
+
+    const toolAudio = manifest?.screeners?.pss10?.[lang] ?? {};
+    const questionAudio = data.questions.map((_, i) => toolAudio[`q${i}`] ?? null);
 
     const getResult = (score) => {
         for (const level of data.interpretation) {
@@ -23,6 +28,7 @@ export default function StressScreener() {
             reverseScored={data.reverseScored}
             hint={t('screener.stressHint')}
             getResult={getResult}
+            questionAudio={questionAudio}
         />
     );
 }

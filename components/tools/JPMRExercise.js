@@ -8,10 +8,13 @@ import {
     jpmrCompletionByLang,
 } from '@/data/clinical.localized';
 import { useLanguage } from '@/components/i18n/LanguageProvider';
+import { useAudioManifest } from '@/hooks/useAudioManifest';
+import AudioKaraoke from '@/components/audio/AudioKaraoke';
 import styles from './JPMRExercise.module.css';
 
 export default function JPMRExercise() {
     const { t, lang } = useLanguage();
+    const manifest = useAudioManifest();
 
     const jpmrMuscleGroups = jpmrMuscleGroupsByLang[lang] || jpmrMuscleGroupsByLang.en;
     const jpmrIntro = jpmrIntroByLang[lang] || jpmrIntroByLang.en;
@@ -26,6 +29,12 @@ export default function JPMRExercise() {
 
     const currentGroup = jpmrMuscleGroups[groupIndex];
     const totalGroups = jpmrMuscleGroups.length;
+
+    const jpmrAudio = manifest?.jpmr?.[lang] ?? {};
+
+    // Current step audio entry for auto-play
+    const stepAudioKey = state === 'tension' ? `step${groupIndex}_tension` : state === 'release' ? `step${groupIndex}_relax` : null;
+    const stepAudio = stepAudioKey ? (jpmrAudio[stepAudioKey] ?? null) : null;
 
     useEffect(() => {
         if (state === 'idle' || state === 'complete' || isPaused) return;
@@ -109,6 +118,9 @@ export default function JPMRExercise() {
                 <div className={styles.completeIcon}>✨</div>
                 <h3 className={styles.title}>{t('jpmr.complete')}</h3>
                 <p className={styles.intro}>{jpmrCompletion}</p>
+                {jpmrAudio.completion && (
+                    <AudioKaraoke entry={jpmrAudio.completion} />
+                )}
                 <button onClick={reset} className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }}>
                     {t('jpmr.startOver')}
                 </button>
@@ -150,9 +162,17 @@ export default function JPMRExercise() {
                 <span className={styles.timerText}>{timeLeft}s</span>
             </div>
 
-            <p className={styles.currentInstruction}>
-                {state === 'tension' ? currentGroup.tensionInstruction : currentGroup.relaxInstruction}
-            </p>
+            {stepAudio ? (
+                <AudioKaraoke
+                    key={stepAudioKey}
+                    entry={stepAudio}
+                    autoPlay={!isPaused}
+                />
+            ) : (
+                <p className={styles.currentInstruction}>
+                    {state === 'tension' ? currentGroup.tensionInstruction : currentGroup.relaxInstruction}
+                </p>
+            )}
 
             <div className={styles.controls}>
                 <button onClick={() => setIsPaused(!isPaused)} className="btn btn-outline" style={{ flex: 1 }}>
